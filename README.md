@@ -8,8 +8,8 @@ This project reverse engineers [Krakout](https://spectrumcomputing.co.uk/entry/2
 
 ## Building the Disassembly
 
-1. Install the [`zx-game-disasm`](https://github.com/morozov/zx-spectrum-skills/tree/main/zx-game-disasm) skill and its requirements.
-2. Install the Python packages in `tools/requirements.txt`.
-3. Build the disassembly by running `make`. If the skill is not in `~/.agents/skills/zx-game-disasm`, run `make SKILL=<path to the skill>`. The build downloads the Krakout and Krakout II tape images from Spectrum Computing.
+To build the HTML disassembly, install the Python packages in `tools/requirements.txt` and run `make html`. The site build is in `vendor/zx-game-disasm/`, so it needs nothing else. The build downloads the Krakout and Krakout II tape images from Spectrum Computing.
+
+`make` and the other development targets also need the [`zx-game-disasm`](https://github.com/morozov/zx-spectrum-skills/tree/main/zx-game-disasm) skill and its requirements. If the skill is not in `~/.agents/skills/zx-game-disasm`, run `make SKILL=<path to the skill>`.
 
 The HTML disassembly is written to `build/html/krakout/`, and the assembly source to `build/krakout.asm`.

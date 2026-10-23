@@ -3,14 +3,16 @@ adopted = [
   "byte-counts",
   "comments",
   "data-structure",
+  "html-layout",
   "identity",
   "images",
   "label-namespace",
   "label-namespace UNREACHED",
   "prose-names",
   "publication",
+  "registers",
 ]
 
 [gate]
-generation = 3
-digest = "ce16da9"
+generation = 14
+digest = "2995611"

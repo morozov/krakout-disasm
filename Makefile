@@ -7,11 +7,17 @@ SP   = 65535    # the game's own LD SP,65535
 RELOC_FLOOR = 0x5B00
 
 SKILL ?= $(HOME)/.agents/skills/zx-game-disasm
-MK = $(SKILL)/tools/disassembly.mk
-ifeq ($(wildcard $(MK)),)
-    $(error $(MK): not found — set SKILL to the zx-game-disasm skill directory)
+SITE_DIR = vendor/zx-game-disasm
+DEV_MK = $(SKILL)/tools/disassembly.mk
+
+-include $(SITE_DIR)/site.mk
+ifneq ($(wildcard $(DEV_MK)),)
+    include $(DEV_MK)
+else ifndef SITE_HOME
+    $(error $(SITE_DIR)/site.mk not found, and no skill at $(SKILL) to vendor it from)
+else
+    $(info $(DEV_MK) not found: only the site build is available)
 endif
-include $(MK)
 
 # Each stamp stands in for 100 renders.
 STAMPS = $(BUILD)/stamps
@@ -34,7 +40,7 @@ $(KRAKOUT_II_Z80): $(KRAKOUT_II_T2S)
 # Extracted at the game image's ORG and SIZE, so tools/render_levels.py reads
 # Krakout II's tables at Krakout's addresses.
 $(KRAKOUT_II_BIN): $(KRAKOUT_II_Z80)
-	$(SCRIPTS)/extract_bytes.py $(KRAKOUT_II_Z80) $(ORG) $(SIZE) $@
+	$(SITE_HOME)/extract_bytes.py $(KRAKOUT_II_Z80) $(ORG) $(SIZE) $@
 
 $(KRAKOUT_II_LEVEL_RENDERS): tools/render_levels.py $(KRAKOUT_II_BIN)
 	@mkdir -p $(dir $@)
@@ -52,7 +58,7 @@ KRAKOUT_II_ICON = $(SITE_RENDERS)/krakout-ii-icon.png
 # The "II" of the loading screen's title.
 $(KRAKOUT_II_ICON): $(KRAKOUT_II_BIN)
 	@mkdir -p $(dir $@)
-	$(SCRIPTS)/render/screen_cells.py $(KRAKOUT_II_BIN) $@ --org $(ORG) --cells 25,4,6,6 --trim
+	$(SITE_HOME)/render/screen_cells.py $(KRAKOUT_II_BIN) $@ --org $(ORG) --cells 25,4,6,6 --trim
 
 PAGE_FRAME = $(SITE_RENDERS)/page-frame.png $(SITE_RENDERS)/page-frame-wall.png
 
@@ -67,7 +73,7 @@ FONT = $(SITE_RENDERS)/krakout-font.ttf $(SITE_RENDERS)/krakout-font.woff2
 # table at $9191.
 $(FONT) &: $(BIN)
 	@mkdir -p $(SITE_RENDERS)
-	$(SCRIPTS)/render/font.py $(BIN) --org $(ORG) --base 0x8EB9 \
+	$(SITE_HOME)/render/font.py $(BIN) --org $(ORG) --base 0x8EB9 \
 	    --first 0x20 --last 0x5A --family Krakout \
 	    --id 'Krakout;Gremlin Graphics 1987;extracted' --out $(SITE_RENDERS)/krakout-font
 
@@ -75,6 +81,7 @@ $(FONT) &: $(BIN)
 $(HTML_DIR)/.stamp: $(FONT) $(PAGE_FRAME) $(LEVEL_RENDERS) $(KRAKOUT_II_LEVEL_RENDERS) \
              $(KRAKOUT_II_ICON) $(KRAKOUT_II_SCREEN)
 
+ifdef SKILL_HOME
 # The build half of the relocation proof, over the permutes in tools/reloc.toml.
 # For the runtime half, make a snapshot of the baseline and each variant with
 # bin2sna.py, run `$(SCRIPTS)/reloc/oracle.py <snapshot.z80> <image> <dump>
@@ -90,3 +97,4 @@ reloc: $(ASM) $(ASM_BIN) $(RELOC_CONFIG)
 	@mkdir -p $(dir $(RELOC_VARIANT))
 	$(SCRIPTS)/reloc/permute.py $(ASM) $(ASM_BIN) $(RELOC_VARIANT) $(RELOC_ARGS) --permute tune
 	$(SCRIPTS)/reloc/permute.py $(ASM) $(ASM_BIN) $(RELOC_SPAWN) $(RELOC_ARGS) --permute spawn
+endif
