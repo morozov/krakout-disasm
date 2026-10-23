@@ -1,0 +1,16 @@
+adopted = [
+  "array-elements",
+  "byte-counts",
+  "comments",
+  "data-structure",
+  "identity",
+  "images",
+  "label-namespace",
+  "label-namespace UNREACHED",
+  "prose-names",
+  "publication",
+]
+
+[gate]
+generation = 3
+digest = "ce16da9"

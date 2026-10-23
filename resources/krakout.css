@@ -1,0 +1,872 @@
+/* Loads after skoolkit.css and theme.css. Ink marks only links, entry types
+   and the game's art; everything else stays neutral. */
+
+:root {
+  /* PAPER 0 */
+  --bg:          #080808;
+  --surface:     #121212;
+  --surface-mid: #3a3a3a;
+  --border:      #242424;
+
+  /* The game's BRIGHT inks, balanced so that no ink outweighs another on black. */
+  --red:         #fd736d;   /* INK 2 */
+  --magenta:     #e282da;   /* INK 3 */
+  --green:       #68cb6e;   /* INK 4 */
+  --cyan:        #3aced6;   /* INK 5 */
+  --yellow:      #e8d34f;   /* INK 6 */
+
+  --text:            #e0e0e0;   /* INK 7 white, softened to body weight */
+  --text-dim:        #868686;
+  --text-dim-raised: #a0a0a0;
+  --code-punct:      #8e8e8e;
+
+  --link:        var(--yellow);
+
+  --diff-removed: var(--red);
+  --diff-added:   var(--green);
+
+  /* PAPER 1, behind the menu screen's copyright line. */
+  --blue-paper:  #1e2f67;
+
+  --tint:        rgba(255, 255, 255, 0.03);
+  --tint-strong: rgba(255, 255, 255, 0.045);
+  --hover:       rgba(255, 255, 255, 0.08);
+  /* --rule is opaque: collapsed borders paint the same pixels where they cross,
+     and an alpha would compound there. */
+  --rule:        #1c1c1c;
+  --rule-strong: rgba(255, 255, 255, 0.12);
+
+  --gutter: 16px;
+
+  /* The theme's narrower cap would draw a second boundary inside the frame. */
+  --index-measure: 1200px;
+
+  /* Opaque: the listing scrolls under the pinned bar, and a blur would add a
+     compositing pass on every scrolled frame. */
+  --header-bg:   var(--bg);
+  --header-blur: none;
+}
+
+.section { --section-color: var(--text-dim-raised); }
+
+/* Keyed on the destination, so a card keeps its map ink when the groups are
+   reordered. */
+.link-card { --section-color: var(--text); color: var(--section-color); }
+.link-card[href$="maps/routines.html"]   { --section-color: var(--red); }
+.link-card[href$="maps/data.html"]       { --section-color: var(--green); }
+.link-card[href$="maps/messages.html"]   { --section-color: var(--magenta); }
+.link-card[href$="buffers/gbuffer.html"] { --section-color: var(--cyan); }
+.link-card[href$="maps/unused.html"]     { --section-color: var(--text-dim-raised); }
+
+/* Scaled smoothly: pixel sampling would drop whole stroke rows of the 45 px
+   picture. */
+img.brand-ii {
+  height: 0.9em;
+  width: auto;
+  margin-left: 0.25em;
+  vertical-align: -0.1em;
+}
+
+/* The game font's capitals sit one row above the baseline. */
+td.page-header img.brand-ii { vertical-align: 0.05em; }
+
+/* No transform: a card that shifts on hover can move its edge out from under
+   the pointer and flicker. */
+.link-card:hover,
+.link-card:focus-visible {
+  transform: none;
+  background: var(--hover);
+  border-color: var(--text-dim);
+}
+
+/* One ink per frame, as the menu loop steps it. step-end, because the game has
+   no value between two attribute bytes. */
+@keyframes ink-run {
+  0%  { color: var(--magenta); }
+  20% { color: var(--green); }
+  40% { color: var(--cyan); }
+  60% { color: var(--yellow); }
+  80% { color: var(--text); }
+}
+
+a:hover,
+a:focus-visible {
+  animation: ink-run 100ms step-end infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a:hover,
+  a:focus-visible {
+    animation: none;
+  }
+}
+
+/* A border-image edge rescales its tiles to the edge's length, which would move
+   the side-wall bricks with the page height. The side walls are background
+   strips repeated from the top corner. body is border-box, so the frame
+   takes its width out of the measure. */
+body {
+  --frame: 32px;
+  position: relative;
+  border: var(--frame) solid transparent;
+  border-image: url(images/page-frame.png) 32 round;
+  image-rendering: pixelated;
+}
+
+body::before,
+body::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: var(--frame);
+  background: url(images/page-frame-wall.png) left top / var(--frame) calc(4 * var(--frame)) repeat-y;
+  pointer-events: none;
+}
+body::before { left: calc(-1 * var(--frame)); }
+body::after  { right: calc(-1 * var(--frame)); }
+
+/* The 32px slice is 16 game pixels and must rasterize to a whole multiple of 16
+   device pixels, or the wall's blocks come out uneven. At these ratios 32px
+   misses that, so the frame takes a width that hits it. */
+@media (resolution: 1.25dppx) {
+  body { --frame: 25.6px; }   /* 32 device px, 2 per game pixel */
+}
+@media (resolution: 1.75dppx) {
+  body { --frame: 27.4286px; } /* 48 device px, 3 per game pixel */
+}
+
+/* Uppercase only: A-Z, digits and punctuation. */
+@font-face {
+  font-family: 'Krakout';
+  src: url(krakout-font.woff2) format('woff2'),
+       url(krakout-font.ttf) format('truetype');
+  font-display: swap;
+}
+
+td.page-header {
+  font-family: 'Krakout', 'JetBrains Mono', monospace;
+}
+
+/* 32px is 4 px per game pixel. A full-cell space reads as a gap three letters
+   wide, so the space is pulled in by half a cell. */
+td.page-header h1 {
+  font-size: 32px;
+  letter-spacing: 0;
+  word-spacing: -0.5em;
+}
+
+/* skoolkit.css sets `font-family: sans`, which is not a generic family, so the
+   browser falls back to its serif default. */
+div.map-entry-desc,
+td.map-c-desc,
+td.map-g-desc,
+td.map-b-desc,
+td.map-w-desc,
+td.map-s-desc,
+td.map-t-desc,
+td.map-u-desc {
+  font-family: var(--font-sans);
+}
+
+.page-content h2.ref-section {
+  --section-color: var(--text);
+  display: block;
+  overflow-x: clip;
+  font-family: 'Krakout', var(--font-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--section-color);
+  font-size: var(--type-heading);
+  letter-spacing: 0;
+  word-spacing: -0.5em;
+  line-height: 1.25;
+  margin: 56px 0 16px;
+}
+
+.page-content h3.ref-subsection {
+  --section-color: var(--text);
+  display: block;
+  overflow-x: clip;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  color: var(--section-color);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.08em;
+  margin: 34px 0 8px;
+}
+
+.page-content hgroup.ref-head { margin: 56px 0 20px; }
+.page-content > hgroup.ref-head:first-child { margin-top: 0; }
+.page-content hgroup.ref-head > h2.ref-section { margin: 0; }
+.page-content hgroup.ref-head > p.ref-deck {
+  margin: 6px 0 0;
+  font-family: var(--font-sans);
+  font-size: var(--type-body);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--text-dim-raised);
+}
+
+/* An inline box as wide as the heading, held on the last line by its negative
+   margin and clipped at the heading's edge. 0.5em is the pixel face's cap
+   middle. */
+.page-content h2.ref-section::after,
+.page-content h3.ref-subsection::after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+  margin-right: -100%;
+  margin-left: 10px;
+  height: 1px;
+  background: var(--section-color);
+  opacity: 0.22;
+}
+.page-content h2.ref-section::after { vertical-align: 0.5em; }
+.page-content h3.ref-subsection::after { vertical-align: 0.35em; }
+
+.sprite-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  align-items: stretch;
+  gap: 14px;
+  margin: 14px 0 24px;
+}
+
+.sprite-card {
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 18px;
+}
+
+.sprite-card.is-wide { grid-column: 1 / -1; }
+
+/* min-height reserves the caption strip on cards without captions. */
+.sprite-stage {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 10px 18px;
+  margin: 10px 0 12px;
+  min-height: 63px;
+}
+
+.sprite-stage img { display: block; }
+
+.sprite-card .sprite-stage { column-gap: 12px; }
+
+:not(.sprite-card) > .sprite-stage {
+  justify-content: center;
+  gap: 10px 48px;
+}
+
+:not(.sprite-card) > .sprite-stage .sprite-take { gap: 10px; }
+
+/* Centered, not stretched, so the sprite keeps its natural size. */
+.sprite-take {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+/* One line, so a caption never makes its take taller than its neighbors. */
+.sprite-phase {
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: var(--type-micro);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.sprite-name {
+  font-family: var(--font-mono);
+  font-size: var(--type-subhead);
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.sprite-meta,
+.sprite-cadence {
+  font-family: var(--font-mono);
+  font-size: var(--type-small);
+  line-height: 1.7;
+  color: var(--text-dim);
+}
+
+.sprite-label {
+  margin-right: 6px;
+  font-size: var(--type-micro);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim-raised);
+}
+
+.sprite-behavior {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  font-size: var(--type-body);
+  line-height: var(--leading-body);
+  color: var(--text);
+}
+
+/* body carries the measure, so every block on a page ends on the same edges. */
+:root { --measure: 1200px; }
+
+:root { --leading-body: 1.75; }
+
+.page-content div.paragraph {
+  font-size: var(--type-body);
+  line-height: var(--leading-body);
+  margin-top: 20px;
+}
+
+div.details,
+div.comments {
+  line-height: var(--leading-body);
+}
+
+.page-content ul,
+.page-content ol {
+  font-size: var(--type-body);
+  line-height: var(--leading-body);
+}
+
+.page-content :is(div.paragraph, li, .sprite-what, .sprite-behavior) { text-wrap: pretty; }
+
+/* The theme indents ul only. */
+.page-content > ol { padding-left: 1.6em; }
+
+.page-content li + li { margin-top: 6px; }
+.page-content ul.contents li + li { margin-top: 0; }
+
+/* Pulled one dot left and clipped, so the dot that opens each line is cut
+   away. */
+.page-content ul.contents {
+  gap: 0;
+  row-gap: 4px;
+  font-size: var(--type-small);
+  line-height: 1.6;
+  margin-left: -22px;
+  clip-path: inset(0 0 0 22px);
+}
+.page-content ul.contents li::before {
+  content: "·" / "";
+  display: inline-block;
+  width: 22px;
+  text-align: center;
+  color: var(--text-dim);
+}
+.page-content ul.contents li a {
+  display: inline;
+  color: var(--link);
+  background: none;
+  border: 0;
+  padding: 0;
+  border-radius: 0;
+  text-decoration: none;
+}
+.page-content ul.contents li a:is(:hover, :focus-visible) {
+  background: none;
+  border: 0;
+}
+.page-content ul.contents li a:focus-visible { outline-offset: -2px; }
+
+.page-content table { border-collapse: collapse; }
+
+.page-content table.default { width: 100%; }
+
+.page-content caption {
+  text-align: left;
+  padding-bottom: 6px;
+  font-family: var(--font-sans);
+  font-size: var(--type-small);
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Left-aligned: centered, addresses and symbols of unequal length stagger. */
+.page-content table.default td.centre { text-align: left; }
+
+.page-content table.default td.code { font-family: var(--font-mono); font-size: 0.88em; }
+.page-content table.default td.code .sym { font-size: inherit; }
+
+.page-content table.default th { white-space: nowrap; }
+
+.page-content table.default :is(td, th).num { text-align: right; }
+
+.page-content th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: var(--type-micro);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim-raised);
+}
+
+/* A symbol keeps its own case: apply_prize is not APPLY_PRIZE. */
+.page-content :is(th, caption) :is(a[href]:not([href^="../"]):not([href^="http"]), .sym, code) {
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: inherit;
+}
+
+/* :where() keeps the specificity low, so the theme's map rules still win. */
+.page-content :where(table:not(.disassembly)) th,
+.page-content :where(table:not(.disassembly)) td { padding: 8px 12px; vertical-align: top; }
+
+/* Code rows are fixed 40px tracks, 8px of padding around a 24px line. A
+   trailing auto track takes the rest of the comment, so a comment never changes
+   the code rows' spacing. The template writes the row count to --rows. */
+.page-content table.disassembly {
+  display: grid;
+  grid-template-columns: [label] max-content [addr] max-content [instr] max-content [note] minmax(0, 1fr);
+}
+.page-content table.disassembly > tbody {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+}
+.page-content table.disassembly > tbody > tr { display: contents; }
+.page-content table.disassembly > tbody.group {
+  grid-template-rows: repeat(var(--rows), 40px) auto;
+}
+.page-content table.disassembly > tbody > tr > td {
+  padding: 8px 18px 8px 0;
+  width: auto;
+}
+/* A border would take space from the 40px tracks; inset shadows draw the line. */
+.page-content table.disassembly > tbody > tr:has(> td.comment-1:not(:empty)) > td { border-top: 0; }
+.page-content table.disassembly > tbody > tr > td.asm-label { grid-column: label; }
+.page-content table.disassembly > tbody > tr > td[class^="address-"] { grid-column: addr; }
+.page-content table.disassembly > tbody > tr > td.instruction { grid-column: instr; }
+
+/* No bottom padding: a comment's last line may sit on the group's bottom edge,
+   so a two-row group holds three lines. */
+.page-content table.disassembly > tbody > tr > td[class^="comment-"] {
+  grid-column: note;
+  grid-row: 1 / -1;
+  padding: 8px 16px 0;
+}
+.page-content table.disassembly > tbody > tr > td.comment-1 {
+  border: 0;
+  box-shadow: inset 1px 0 0 color-mix(in srgb, #fff var(--lit), var(--edge));
+}
+.page-content table.disassembly > tbody.group + tbody.group > tr:first-child > td {
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff var(--lit), var(--rule));
+}
+.page-content table.disassembly > tbody.group + tbody.group > tr:first-child > td.comment-1 {
+  box-shadow:
+    inset 1px 0 0 color-mix(in srgb, #fff var(--lit), var(--edge)),
+    inset 0 1px 0 color-mix(in srgb, #fff var(--lit), var(--rule));
+}
+
+.page-content table.disassembly > tbody > tr > td.routine-comment {
+  grid-column: 1 / -1;
+  padding: 0 0 20px;
+}
+.page-content table.disassembly > tbody.group + tbody.block > tr > td.routine-comment { padding-top: 20px; }
+table.disassembly :is(div.details, div.comments) { margin: 0; padding: 0; }
+table.disassembly td.routine-comment table:not(:has(th)) td { padding: 0 14px 0 0; }
+table.disassembly td.routine-comment td > img:only-child { display: block; }
+table.disassembly td.routine-comment table:has(th) { width: 100%; }
+table.disassembly td.routine-comment table:has(th) th {
+  background: rgba(255, 255, 255, 0.07);
+  border-bottom: 1px solid var(--border);
+}
+
+.page-content table.default td { font-size: 16px; line-height: 1.5; }
+
+.page-content table { font-variant-numeric: tabular-nums; }
+
+.page-content > table:not(.disassembly):has(th) { width: 100%; }
+
+.page-content table.default,
+.page-content > table:not(.disassembly):has(th) { margin: 18px 0 6px; }
+.page-content table:has(caption) { margin-top: 28px; }
+
+/* Banding keys on a header row: sprite grids have none, and a tint behind a
+   sprite would show as a rectangle. The listing is excluded, or a nested table
+   would band the whole routine. */
+.page-content table:not(.disassembly):has(th) tr + tr td { border-top: 1px solid var(--rule); }
+.page-content table:not(.disassembly):has(th) tbody tr:nth-child(even) td {
+  background: color-mix(in srgb, #fff var(--lit), var(--tint));
+}
+
+.page-content div.paragraph:has(> .inset) {
+  display: flow-root;
+  padding-left: 64px;
+}
+.page-content .inset {
+  float: left;
+  width: 64px;
+  margin: 4px 0 0 -64px;
+}
+.page-content .inset img { display: block; }
+
+.page-content > img {
+  display: block;
+  margin: 16px auto 8px;
+}
+
+.page-content > video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 16px auto 8px;
+}
+
+/* :not(:has(th)) keeps data tables on the text's left edge. */
+.page-content > table:not(:has(th)),
+.page-content div.details > div.paragraph > table:not(:has(th)) {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dim { color: var(--text-dim); }
+.page-content td:has(> .dim) { white-space: nowrap; }
+
+table.disassembly td.routine-comment table.font-chart { width: auto; }
+.page-content table.font-chart th,
+.page-content table.font-chart td {
+  padding: 4px 8px;
+  text-align: center;
+  vertical-align: middle;
+}
+table.disassembly td.routine-comment table.font-chart td > img { margin: 0 auto; }
+
+.sprite-what {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  font-size: var(--type-body);
+  line-height: 1.6;
+}
+
+/* An #AUDIO player in a shrink-wrapped #UDGTABLE cell collapses at
+   width: 100%. */
+audio {
+  width: 380px;
+  max-width: 100%;
+}
+
+/* Generated prefixes, so a copied line holds only the game's text. */
+.text-diff {
+  font-family: var(--font-mono);
+  white-space: pre-wrap;
+}
+
+.text-del,
+.text-ins { display: block; }
+
+.text-del { color: var(--diff-removed); }
+.text-ins { color: var(--diff-added); }
+.text-del::before { content: "- "; }
+.text-ins::before { content: "+ "; }
+
+.level-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 14px 0 24px;
+}
+
+.level-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "number"
+    "field"
+    "pool";
+  grid-template-rows: auto auto auto;
+  justify-items: start;
+  align-content: start;
+  column-gap: 18px;
+  row-gap: 10px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+
+.level-number {
+  grid-area: number;
+  font-family: var(--font-mono);
+  font-size: var(--type-subhead);
+  font-weight: 700;
+  color: var(--text);
+}
+
+.level-field { grid-area: field; }
+
+.level-field img {
+  display: block;
+  width: 292px;
+  height: 292px;
+  image-rendering: pixelated;
+}
+
+.level-pool {
+  grid-area: pool;
+  align-self: start;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+  font-family: var(--font-mono);
+  font-size: var(--type-small);
+  color: var(--text);
+}
+
+.pool-item { display: inline-flex; align-items: center; gap: 2px; }
+
+.pool-icon {
+  image-rendering: pixelated;
+  vertical-align: middle;
+}
+
+.pool-none { color: var(--text-dim-raised); }
+
+/* SkoolKit writes a transparent paper only for an explicit UDG list, so these
+   renders are opaque black. screen drops the black. */
+.page-content img[src$="loading_screen.png"],
+.page-content img[src$="loading-screen.png"],
+.page-content img[src$="title_logo.png"] {
+  mix-blend-mode: screen;
+}
+
+/* Not every operand links, so at rest a linked one looks like any other
+   operand. The underline keeps a hovered label from reading as a magenta
+   literal during the ink run. */
+td.instruction a[href] { color: inherit; }
+td.instruction a:hover,
+td.instruction a:focus-visible {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+footer .copyright {
+  background: var(--blue-paper);
+  color: var(--yellow);
+  line-height: 1.5;
+  padding: 0.75em var(--gutter);
+  /* The band runs past the footer's gutter to the wrapper's edges. */
+  margin: 12px calc(-1 * var(--gutter));
+}
+
+/* The h1 text stays for readers that do not see the logo. 2x keeps the art on
+   whole pixels. */
+.game-title {
+  font-size: 0;
+}
+
+.game-title::before {
+  content: '';
+  display: block;
+  width: 448px;
+  max-width: 100%;
+  aspect-ratio: 224 / 48;
+  margin: 0 auto;
+  background: url(images/udgs/logo.png) center / contain no-repeat;
+  image-rendering: pixelated;
+}
+
+body.GameIndex footer .release {
+  display: none;
+}
+
+div.description { font-size: var(--type-heading); margin-bottom: 20px; }
+td.routine-comment :is(div.details, div.comments) > div.paragraph:first-child { margin-top: 0; }
+td.routine-comment div.comments { padding-top: 0; }
+
+body.Asm-c, body.RoutinesMap { --type-ink: var(--red); }
+body:is(.Asm-b, .Asm-w, .Asm-s), body.DataMap { --type-ink: var(--green); }
+body.Asm-g, body.GameStatusBuffer { --type-ink: var(--cyan); }
+body.Asm-t, body.MessagesMap { --type-ink: var(--magenta); }
+body.Asm-u, body.UnusedMap { --type-ink: var(--text-dim-raised); }
+td.page-header h1 { color: var(--text); }
+td.instruction .hljs-keyword  { color: var(--text); }
+td.instruction .hljs-built_in { color: var(--text); }
+td.instruction .hljs-number   { color: var(--magenta); }
+/* On a data page every operand is a literal, so the literal takes the reading
+   color. */
+body:is(.Asm-b, .Asm-w, .Asm-s, .Asm-g, .Asm-u) td.instruction .hljs-number { color: var(--text); }
+td.asm-label { color: var(--type-ink); }
+td.address-2 { color: var(--text); }
+td.address-1 { color: #9a9a9a; }
+
+code { color: var(--text); border: 1px solid rgba(255, 255, 255, 0.14); }
+.hex { border: none; padding: 0 0.15em; }
+
+table.map td[class^="map-"] a[href] { font-size: inherit; }
+td.map-c, td.map-g, td.map-b, td.map-w, td.map-s, td.map-t, td.map-u { text-align: left; }
+td.map-c a { color: var(--red); }
+td.map-g a { color: var(--cyan); }
+td.map-b a, td.map-w a, td.map-s a { color: var(--green); }
+td.map-t a { color: var(--magenta); }
+td.map-u a { color: var(--text-dim-raised); }
+table.map a.map-entry-title[href] { font-family: inherit; font-size: inherit; }
+.page-content div.map-entry-desc > div.paragraph {
+  font-size: var(--type-small);
+  line-height: 1.55;
+  margin-top: 4px;
+}
+div.map-entry-desc { color: var(--text-dim-raised); }
+td.map-length, table.map th.map-length {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+table.map th, table.input th, table.output th { color: var(--text-dim-raised); }
+div.map-intro:empty { display: none; }
+
+.section-label { letter-spacing: 0.15em; font-weight: 600; }
+.subtitle { font-weight: 400; letter-spacing: 0.14em; text-wrap: balance; }
+.section-label::after { background: var(--section-color); opacity: 0.22; }
+
+div.description { color: var(--text); border-left-color: var(--type-ink, var(--text-dim)); }
+div.box-title, div.list-entry-title { color: var(--text); }
+
+body.GameIndex .link-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+body.GameIndex footer { margin-top: 16px; }
+
+.page-content a[href*="asm/"] {
+  text-underline-offset: 0.3em;
+  text-decoration-thickness: 1px;
+}
+
+@media (max-width: 640px) {
+  table.header tr { flex-wrap: wrap; row-gap: 4px; }
+  td.page-header { flex: 1 1 100%; white-space: normal; }
+  td.page-header h1 { font-size: 16px; }
+  .page-content h2.ref-section { font-size: 16px; }
+  .page-content :where(table:not(.disassembly)) { display: block; overflow-x: auto; }
+}
+
+body:is(.Graphics, .Sound, .Levels, .krakout-ii, .Defects, .Glossary, .Pokes, .GameIndex) { --measure: 800px; }
+
+/* A link up to a reading page names a section in English, so it keeps the
+   reading face. */
+td.comment-1 a[href]:not([href^="../"]),
+td.routine-comment a[href]:not([href^="http"]):not([href^="../"]) {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  text-underline-offset: 0.3em;
+}
+
+/* line-height 1 keeps a mono run's inline box from making its line taller. */
+.page-content :is(a[href*="asm/"], td.comment-1 a[href], td.routine-comment a[href], code, .hex, .sym) { line-height: 1; }
+.sym {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+}
+
+div.box-title, div.list-entry-title, .sprite-name, .level-number {
+  font-family: var(--font-sans);
+  font-weight: 650;
+  letter-spacing: 0;
+}
+ul.contents li a { font-family: var(--font-sans); }
+.sprite-name::first-letter { text-transform: uppercase; }
+
+.page-content { padding-top: 24px; }
+/* The :is() list outranks each first child's own margin rule. */
+.page-content > :is(*, h2.ref-section, div.paragraph, table.asm-navigation):first-child { margin-top: 0; }
+/* A hidden empty map intro is still the first child. */
+.page-content > div.map-intro:empty:first-child + * { margin-top: 0; }
+.page-content h2.ref-section { text-wrap: balance; }
+
+.page-content table:not(.disassembly):has(td img) td { vertical-align: middle; }
+
+/* Two lines, so the rule under it lines up across a row. */
+.sprite-meta { min-height: calc(2 * 1.7em); }
+
+.sprite-meta > span { display: block; }
+
+body.Glossary div.box {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+  border-radius: 0;
+  padding: 12px 0;
+  margin: 0;
+}
+body.Glossary div.box-title { font-size: var(--type-body); margin-bottom: 2px; }
+body.Glossary div.box > div.paragraph,
+body.Sound div.box > div.paragraph { margin-top: 4px; }
+
+body.Sound div.box { padding: 14px 20px; }
+body.Sound div.box:has(audio) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "title player"
+    "text  text";
+  column-gap: 24px;
+  align-items: center;
+}
+body.Sound div.box:has(audio) > div.box-title { grid-area: title; margin-bottom: 0; }
+body.Sound div.box:has(audio) > div.paragraph:not(:has(audio)) { grid-area: text; }
+body.Sound div.box:has(audio) > div.paragraph:has(> audio) { grid-area: player; margin-top: 0; }
+body.Sound div.box audio { width: 300px; margin: 0; }
+
+div.map-intro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 24px;
+  row-gap: 6px;
+  margin-bottom: 12px;
+  font-family: var(--font-mono);
+  font-size: var(--type-micro);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+div.map-intro .key-label { color: var(--text-dim-raised); font-weight: 700; }
+div.map-intro .key {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+}
+div.map-intro .key::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background: var(--key-ink);
+}
+div.map-intro .key.map-c { --key-ink: var(--red); }
+div.map-intro .key.map-g { --key-ink: var(--cyan); }
+div.map-intro .key.map-b { --key-ink: var(--green); }
+div.map-intro .key.map-t { --key-ink: var(--magenta); }
+div.map-intro .key.map-u { --key-ink: var(--text-dim-raised); }
+
+table.asm-navigation,
+table.asm-navigation > tbody { display: block; }
+table.asm-navigation tr {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  column-gap: 24px;
+}
+table.asm-navigation :is(td.prev, td.up, td.next) { width: auto; }
+table.asm-navigation :is(td.prev, td.next) {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/* Gray, so only the address runs the hover inks. */
+table.asm-navigation .nav-title {
+  font-family: var(--font-sans);
+  color: var(--text-dim-raised);
+  margin-left: 6px;
+}

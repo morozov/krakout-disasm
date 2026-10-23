@@ -1,0 +1,131 @@
+; SkoolKit expands no PageContent on a page with a SectionPrefix, so the notes
+; below are an [Audio:...] entry too.
+[Page:Sound]
+SectionPrefix=Audio
+
+[Audio:clips:About these clips]
+Every sound effect below drives the loudspeaker through #R$B9B4(one square-wave routine), and every tune
+through #R$D568(the tune player). The bursts and their order come from the code. The gaps between them are estimates,
+because the game paces itself.
+
+[Audio:title_tune:Title tune]
+The tune heard on the title screen, in the high-score wait, and while the game-over screen waits for a restart. Fed byte by byte to #R$D568(the tune player) from #R$D642(its note data).
+
+#AUDIO(sim=1,start=36207,stop=35775,vol=25)(title_tune.wav)
+
+[Audio:game_over_tune:Game-over tune]
+The tune that marks the end of a game. Fed byte by byte to #R$D568(the tune player) from #R$D605(its note data).
+
+#AUDIO(sim=1,start=36174,stop=36195,vol=25)(game_over_tune.wav)
+
+[Audio:key_press_blip:Key-press blip]
+The blip that answers a key press in the menus and prompts, and when you pause or resume. Played by #R$B77C(the key-press blip routine).
+
+#AUDIO(0,vol=25)(key_press_blip.wav)(#INCLUDE(PlaySoundDelays))
+
+[Audio:ball_bounce:Ball bounce]
+The ball as it comes off the bat. Played by #R$B898.
+
+#AUDIO(sim=1,start=47256,stop=47270,vol=25)(ball_bounce.wav)
+
+[Audio:brick_hit:Brick hit]
+The blip when the missile shot breaks a brick. Played by #R$B8A7(the brick-hit sound routine).
+
+#AUDIO(sim=1,start=47271,stop=47286,vol=25)(brick_hit.wav)
+
+[Audio:brick_destroyed:Brick destroyed]
+A brick hit that shatters the brick to an empty slot. Played by #R$B8B7(the brick-destroyed sound routine).
+
+#AUDIO(sim=1,start=47287,stop=47323,vol=25)(brick_destroyed.wav)
+
+[Audio:brick_survives:Brick survives the hit]
+A brick hit that leaves the brick in place: a golden brick, or a silver brick
+that steps down. Played by #R$B8DC.
+
+#AUDIO(sim=1,start=47324,stop=47339,vol=25)(brick_survives.wav)
+
+[Audio:prize_reveal_tune:Prize-reveal tune]
+Four notes, played when a ball reveals a prize. Fed byte by byte to #R$D568(the tune player) from
+#R$D743(its note data).
+
+#AUDIO(0,vol=25)(prize_reveal_tune.wav)(#INCLUDE(PrizeRevealTuneDelays))
+
+[Audio:bomb_detonate:Bomb detonation]
+The bomb prize as it blows its 3×3 hole in the field. Played by #R$B8EC(the bomb sound routine).
+
+#AUDIO(0,vol=25)(bomb_detonate.wav)(#INCLUDE(LoopDDelays))
+
+[Audio:bat_grows:Bat grows]
+The bat as it grows longer when the expand prize is taken. Played by #R$B92A(the bat-grows sound routine).
+
+#AUDIO(0,vol=25)(bat_grows.wav)(#INCLUDE(LoopEDelays))
+
+[Audio:bat_shrinks:Bat shrinks]
+The expanded bat as it shrinks back to its normal size. Played by #R$B968.
+
+#AUDIO(0,vol=25)(bat_shrinks.wav)(#INCLUDE(LoopFDelays))
+
+[Audio:safety_net_flash:Safety net flash]
+The safety net barrier as it flashes. Played by #R$B991.
+
+#AUDIO(0,vol=25)(safety_net_flash.wav)(#INCLUDE(LoopGDelays))
+
+[Audio:inhabitant_spawns:Inhabitant spawns]
+An inhabitant as it spawns. Played by #R$B7DF(the spawn sound routine).
+
+#AUDIO(0,vol=25)(inhabitant_spawns.wav)(#INCLUDE(LoopBDelays))
+
+[Audio:death_burst:Death burst]
+The death burst, as an inhabitant dies or the bat explodes when the last ball in
+play is lost. A missile shot that bursts on a wall and a ball gem whose flight runs
+out play it too. Played by #R$B7AE.
+
+#AUDIO(0,vol=25)(death_burst.wav)(#INCLUDE(LoopADelays))
+
+[Audio:second_ball_spawn:Second-ball spawn]
+Ball B as it spawns. Played by #R$B78F.
+
+#AUDIO(sim=1,start=46991,stop=47002,vol=25)(second_ball_spawn.wav)
+
+[Audio:chew:Orb chews the ball]
+The orb as it works the ball in its mouth. Played by #R$B836.
+
+#AUDIO(0,vol=25)(chew.wav)(#INCLUDE(LoopCDelays))
+
+[Audio:orb_spit:Orb spits the ball out]
+The upward sweep when the orb spits the ball out. Played by #R$B884.
+
+#AUDIO(sim=1,start=47236,stop=47255,vol=25)(orb_spit.wav)
+
+[Audio:menu_move:Name-entry cursor move]
+The cursor as it steps along the name-entry strip. Every position on the strip has
+its own pitch. Played by #R$B85A.
+
+#AUDIO(sim=1,start=47194,stop=47218,vol=25)(menu_move.wav)
+
+[PrizeRevealTuneDelays]
+3327,3327,3327,3327,3327,3327,3327,3327,3327,3327,3327,3327,3327,3327,3327,3327,3327,3327,3327,3327,3327,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,1663,2651,2651,2651,2651,2651,2651,2651,2651,2651,2651,2651,2651,2651,2651,2651,2651,2651,2651,2651,2651,2651,2651,2651,2651,2651,2651,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169,1169
+
+[PlaySoundDelays]
+1314,1364,1301,1351,1288,1338,1275,1325,1262,1312,1249,1299,1236,1286,1223,1273,1210,1260,1197,1266,2614,2664,2601,2651,2588,2638,2575,2625,2562,2612,2549,2599,2536,2586,2523,2573,2510,2560,2497,2547,2484,2534,2471,2521,2458,2508,2445,2495,2432,2482,2419,2469,2406,2456,2393,2443,2380,2430,2367
+
+[LoopADelays]
+1834,1884,1847,64323,1184,1234,1197,66273,1054,1104,1067,66663,664,714,677,67833,2614,2664,2627,61983,3004,3054,3017,60813,534,584,547,68223,794,844,807,67443,1314,1364,1327,65883,1964,2014,1977,63933,1314,1364,1327,65883,664,714,677,67833,664,714,677,67833,664,714,677
+
+[LoopBDelays]
+2614,2664,2601,62009,2224,2274,2211,63179,1704,1754,1691,64739,2614,2664,2601,62009,1314,1364,1301,65909,1054,1104,1041,66689,664,714,651,67859,274,324,261,69029,274,324,261
+
+[LoopCDelays]
+1444,1494,1431,65519,2744,2794,2731,61619,1574,1624,1561,65129,2614,2664,2601,62009,1964,2014,1951,63959,2614,2664,2601,62009,3264,3314,3251,60059,1184,1234,1171,66299,3004,3054,2991,60839,2614,2664,2601,62009,1964,2014,1951,63959,664,714,651,67859,170,220,157,69341,1574,1624,1561,65129,924,974,911,67079,1184,1234,1171,66299,3134,3184,3121,60449,1314,1364,1301,65909,2094,2144,2081,63569,1314,1364,1301,65909,1054,1104,1041,66689,1574,1624,1561,65129,2094,2144,2081,63569,2484,2534,2471,62399,2744,2794,2731,61619,1314,1364,1301,65909,2614,2664,2601,62009,1964,2014,1951,63959,534,584,521,68249,144,194,131,69419,1444,1494,1431,65519,1964,2014,1951,63959,2614,2664,2601,62009,1704,1754,1691,64739,1184,1234,1171,66299,1964,2014,1951,63959,2614,2664,2601,62009,1704,1754,1691,64739,1314,1364,1301,65909,3264,3314,3251,60059,1314,1364,1301,65909,1834,1884,1821,64349,534,584,521,68249,1054,1104,1041,66689,404,454,391,68639,1574,1624,1561,65129,1704,1754,1691,64739,664,714,651,67859,768,818,755
+
+[LoopDDelays]
+2406,2460,1483,1537,2952,3006,2575,2629,1821,1875,313,367,612,666,1210,1264,2406,2460,1483,36363,2302,2356,1275,1329,2536,2590,1743,1797,157,211,300,354,586,640,1158,1212,2302,2356,1275,43409,2198,2252,1067,1121,2120,2174,911,965,1808,1862,287,341,560,614,1106,1160,2198,2252,1067,43825,2094,2148,859,913,1704,1758,79,133,144,198,274,328,534,588,1054,1108,2094,2148,859
+
+[LoopEDelays]
+1184,1230,1184,66290,1119,1165,1119,66485,1054,1100,1054,66680,989,1035,989,66875,924,970,924,67070,859,905,859,67265,794,840,794,67460,729,775,729,67655,664,710,664,67850,599,645,599,68045,534,580,534,68240,469,515,469,68435,404,450,404,68630,794,840,794,67460,274,320,274
+
+[LoopFDelays]
+404,450,404,68630,469,515,469,68435,534,580,534,68240,599,645,599,68045,664,710,664,67850,729,775,729,67655,794,840,794,67460,859,905,859,67265,924,970,924,67070,989,1035,989,66875,1054,1100,1054,66680,1119,1165,1119,66485,1184,1230,1184,66290,1249,1295,1249,66095,1314,1360,1314
+
+[LoopGDelays]
+196,242,196,242,196,242,196,242,196,242,196,242,196,242,196,242,196,242,196,242,196,242,196,64874,222,268,222,268,222,268,222,268,222,268,222,268,222,268,222,268,222,268,222,268,222,268,222,64276,248,294,248,294,248,294,248,294,248,294,248,294,248,294,248,294,248,294,248,294,248,294,248,63678,274,320,274,320,274,320,274,320,274,320,274,320,274,320,274,320,274,320,274,320,274,320,274,63080,300,346,300,346,300,346,300,346,300,346,300,346,300,346,300,346,300,346,300,346,300,346,300,62482,326,372,326,372,326,372,326,372,326,372,326,372,326,372,326,372,326,372,326,372,326,372,326,61884,352,398,352,398,352,398,352,398,352,398,352,398,352,398,352,398,352,398,352,398,352,398,352

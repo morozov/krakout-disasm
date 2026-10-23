@@ -1,0 +1,260 @@
+[Config]
+RefFiles=graphics.ref;sound.ref;defects.ref;levels.ref;krakout-ii.ref;glossary.ref;pokes.ref
+GameDir=krakout
+
+[ImageWriter]
+PNGAlpha=0
+
+[Game]
+Game=Krakout
+DisassemblyTableNumCols=4
+LinkOperands=CALL,DEFW,DJNZ,JP,JR,LD
+StyleSheet=skoolkit.css;theme.css;krakout.css
+; Hex, to match the hex page filenames CodeFiles sets below.
+AddressAnchor={address#IF({base}==16)(:04x)}
+Copyright=(c) 1987 Gremlin Graphics.
+Font=krakout-font.woff2;krakout-font.ttf
+Logo=#UDGARRAY14,7,2,tindex=1,alpha=0($BEF9,$44;$BF01,$44;$BF09,$44;$BF11,$44;$BF19,$44;$BF21,$44;$BF29,$44;$BF31,$44;$BF39,$47;$BF41,$47;$BF49,$46;$BF51,$46;$BF59,$46;$BF61,$46;$BF69,$44;$BF71,$44;$BF79,$44;$BF81,$44;$BF89,$44;$BF91,$44;$BF99,$44;$BFA1,$47;$BFA9,$45;$BFB1,$45;$BFB9,$46;$BFC1,$46;$BFC9,$46;$BFD1,$46;$BFD9,$44;$BFE1,$44;$BFE9,$44;$BFF1,$44;$BFF9,$44;$C001,$44;$C009,$44;$C011,$47;$C019,$45;$C021,$45;$C029,$46;$C031,$46;$C039,$46;$C041,$46)(logo|Krakout home)
+
+[Resources]
+page-frame.png=images
+page-frame-wall.png=images
+levels/krakout/*.png=images/levels
+levels/krakout-ii/*.png=images/levels-krakout-ii
+krakout-ii-icon.png=images
+krakout-ii-loading-screen.png=images
+defects/*.mp4=videos/defects
+
+[Index]
+Listing
+Game
+Reference
+
+; Every name here must be a page some ref file defines: SkoolKit silently drops
+; an entry whose page has no file.
+[Index:Listing:The listing]
+MemoryMap
+RoutinesMap
+DataMap
+MessagesMap
+UnusedMap
+GameStatusBuffer
+
+[Index:Game:The game]
+Graphics
+Sound
+Levels
+krakout-ii
+Defects
+
+[Index:Reference:Reference]
+Glossary
+Pokes
+
+; s entries are buffers the game fills, so they map with the data.
+[MemoryMap:MemoryMap]
+PageByteColumns=0
+Intro=<span class="key-label">Address color</span><span class="key map-c">Code</span><span class="key map-g">Game status</span><span class="key map-b">Data</span><span class="key map-t">Text</span><span class="key map-u">Unused</span>
+
+[MemoryMap:DataMap]
+PageByteColumns=0
+EntryTypes=bsw
+
+[MemoryMap:UnusedMap]
+PageByteColumns=0
+EntryTypes=u
+
+[PageHeaders]
+Asm-s=Data
+GameStatusBuffer=Game status
+Graphics=Graphics
+Sound=Sound
+Levels=The level set
+krakout-ii=Krakout <img class="brand-ii" src="images/krakout-ii-icon.png" alt="II" />
+Glossary=Glossary
+Pokes=Pokes
+Defects=Known defects
+
+[Paths]
+CodeFiles={address:04X}.html
+
+[Links]
+MemoryMap=Everything
+RoutinesMap=Routines
+DataMap=Data
+MessagesMap=Messages
+UnusedMap=Unused addresses
+GameStatusBuffer=Game status
+Graphics=Game graphics
+Sound=Sound
+Levels=The level set
+krakout-ii=Krakout <img class="brand-ii" src="images/krakout-ii-icon.png" alt="II" />
+Glossary=Glossary of terms
+Pokes=Pokes
+Defects=Known defects
+
+; A [Page:...] page needs a line here as well as in [PageHeaders] and [Links],
+; or it is titled with its page ID.
+[Titles]
+GameStatusBuffer=Game status
+Graphics=Game graphics
+Sound=Sound
+Levels=The level set
+krakout-ii=Krakout II
+Glossary=Glossary of terms
+Pokes=Pokes
+Defects=Known defects
+Asm-b={entry[title]}
+Asm-c={entry[title]}
+Asm-g={entry[title]}
+Asm-s={entry[title]}
+Asm-t={entry[title]}
+Asm-u={entry[title]}
+Asm-w={entry[title]}
+
+; Header cells take their column's class too.
+[Template:table]
+<table class="{class}">
+<# foreach($row,rows) #>
+<tr>
+<# foreach($cell,$row[cells]) #>
+<# if({$cell[header]}) #>
+<th class="{$cell[class]}" colspan="{$cell[colspan]}" rowspan="{$cell[rowspan]}">{$cell[contents]}</th>
+<# else #>
+<td class="{$cell[class]}" colspan="{$cell[colspan]}" rowspan="{$cell[rowspan]}">{$cell[contents]}</td>
+<# endif #>
+<# endfor #>
+</tr>
+<# endfor #>
+</table>
+
+; A tbody.block holds one full-width row. A tbody.group holds the instructions
+; one comment spans, with their count in --rows for the listing grid.
+[Template:asm]
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+<# if({prev_entry[exists]}) #>
+<a href="{prev_entry[href]}">&larr; {prev_entry[address]} <span class="nav-title">{prev_entry[title]}</span></a>
+<# endif #>
+</td>
+<td class="up"><a href="{entry[map_href]}">Map</a></td>
+<td class="next">
+<# if({next_entry[exists]}) #>
+<a href="{next_entry[href]}">{next_entry[address]} &rarr; <span class="nav-title">{next_entry[title]}</span></a>
+<# endif #>
+</td>
+</tr>
+</table>
+<div class="description">{entry[address]}: {entry[title]}</div>
+<table class="disassembly">
+<# if(entry[description]) #>
+<tbody class="block">
+<tr>
+<td class="routine-comment" colspan="{Game[DisassemblyTableNumCols]}">
+<div class="details">
+<# foreach($paragraph,entry[description]) #>
+<div class="paragraph">
+{$paragraph}
+</div>
+<# endfor #>
+</div>
+</td>
+</tr>
+<# endif #>
+<# if(entry[input_registers] or entry[output_registers]) #>
+<tbody class="block">
+<tr>
+<td class="routine-comment" colspan="{Game[DisassemblyTableNumCols]}">
+<# if(entry[input_registers]) #>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">{Game[InputRegisterTableHeader]}</th>
+</tr>
+<# foreach($reg,entry[input_registers]) #>
+<tr>
+<td class="register">{$reg[name]}</td>
+<td class="register-desc">{$reg[description]}</td>
+</tr>
+<# endfor #>
+</table>
+<# endif #>
+<# if(entry[output_registers]) #>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">{Game[OutputRegisterTableHeader]}</th>
+</tr>
+<# foreach($reg,entry[output_registers]) #>
+<tr>
+<td class="register">{$reg[name]}</td>
+<td class="register-desc">{$reg[description]}</td>
+</tr>
+<# endfor #>
+</table>
+<# endif #>
+</td>
+</tr>
+<# endif #>
+<# foreach($instruction,entry[instructions]) #>
+<# if($instruction[block_comment]) #>
+<tbody class="block">
+<tr>
+<td class="routine-comment" colspan="{Game[DisassemblyTableNumCols]}">
+<span id="{$instruction[anchor]}"></span>
+<div class="comments">
+<# foreach($paragraph,$instruction[block_comment]) #>
+<div class="paragraph">
+{$paragraph}
+</div>
+<# endfor #>
+</div>
+</td>
+</tr>
+<# endif #>
+<# if($instruction[comment_rowspan]) #>
+<tbody class="group" style="--rows: {$instruction[comment_rowspan]}">
+<# endif #>
+<tr>
+<# if({entry[labels]}) #>
+<td class="asm-label">{$instruction[label]}</td>
+<# endif #>
+<td class="address-{$instruction[called]}"><span id="{$instruction[anchor]}"></span>{$instruction[address]}</td>
+<# if({entry[show_bytes]}) #>
+<td class="bytes">{$instruction[bytes]:{Game[Bytes]}}</td>
+<# endif #>
+<td class="instruction">{$instruction[operation]}</td>
+<# if($instruction[comment_rowspan]) #>
+<td class="comment-{entry[annotated]}" rowspan="{$instruction[comment_rowspan]}">{$instruction[comment]}</td>
+<# endif #>
+</tr>
+<# endfor #>
+<# if(entry[end_comment]) #>
+<tbody class="block">
+<tr>
+<td class="routine-comment" colspan="{Game[DisassemblyTableNumCols]}">
+<div class="comments">
+<# foreach($paragraph,entry[end_comment]) #>
+<div class="paragraph">
+{$paragraph}
+</div>
+<# endfor #>
+</div>
+</td>
+</tr>
+<# endif #>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+<# if({prev_entry[exists]}) #>
+<a href="{prev_entry[href]}">&larr; {prev_entry[address]} <span class="nav-title">{prev_entry[title]}</span></a>
+<# endif #>
+</td>
+<td class="up"><a href="{entry[map_href]}">Map</a></td>
+<td class="next">
+<# if({next_entry[exists]}) #>
+<a href="{next_entry[href]}">{next_entry[address]} &rarr; <span class="nav-title">{next_entry[title]}</span></a>
+<# endif #>
+</td>
+</tr>
+</table>

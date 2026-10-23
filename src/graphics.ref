@@ -1,0 +1,396 @@
+[Page:Graphics]
+PageContent=#INCLUDE(GraphicsContent)
+
+[GraphicsContent]
+<h2 class="ref-section" id="loading-screen">Loading screen</h2>
+
+<div class="paragraph">
+The picture loaded into #R$4000(screen RAM) before the game starts.
+</div>
+
+#SCR2,tindex=1,alpha=0(loading_screen)
+
+<h2 class="ref-section" id="title-logo">Title logo</h2>
+
+<div class="paragraph">
+The KRAKOUT wordmark on the front-end title screen, a 14-column by 3-row block of
+8×8 cells. The #R$BEF9(cell bitmaps) are stored in order, and the #R$C049(per-cell
+attributes) that give the wordmark its color follow them. The render below
+reads both:
+</div>
+
+#UDGTABLE { #UDGARRAY14,7,2,tindex=1,alpha=0($BEF9-$C041-8)[$C049-$C072](title_logo) } TABLE#
+
+<h2 class="ref-section" id="character-font">Character font</h2>
+
+<div class="paragraph">
+The game's own 8×8 character set, shown here from 0 to Z. The #R$8FB9(font entry) charts every glyph
+against its character code.
+</div>
+
+#FONT36921,43,71,2,tindex=1,alpha=0(font_digits_letters)
+
+<h2 class="ref-section" id="player-bat">Player bat</h2>
+
+<div class="paragraph">
+The #R$E100(bat) in its normal, expanded and missile forms, and the
+#R$E180(missile shot).
+</div>
+
+<div class="sprite-stage">
+<div class="sprite-take">#UDGARRAY2,7,4,2,tindex=1,alpha=0($E101,,2;$E100,,2;$E111,,2;$E110,,2)(player_bat)<div class="sprite-phase">normal bat</div></div>
+<div class="sprite-take">#UDGARRAY2,7,4,2,tindex=1,alpha=0($E121,,2;$E120,,2;$E131,,2;$E130,,2;$E141,,2;$E140,,2;$E151,,2;$E150,,2)(bat_expanded)<div class="sprite-phase">expanded bat</div></div>
+<div class="sprite-take">#UDGARRAY2,7,4,2,tindex=1,alpha=0($E161,,2;$E160,,2;$E171,,2;$E170,,2)(missile_bat)<div class="sprite-phase">missile bat</div></div>
+<div class="sprite-take">#UDGARRAY2,7,4,2,tindex=1,alpha=0($E181,,2;$E180,,2;$E191,,2;$E190,,2)(spr_missile_shot)<div class="sprite-phase">missile shot</div></div>
+</div>
+
+<h2 class="ref-section" id="ball">Ball</h2>
+
+<div class="paragraph">
+The #R$E0E0(ball).
+</div>
+
+#UDGARRAY2,7,4,2,tindex=1,alpha=0($E0E1,,2;$E0E0,,2;$E0F1,,2;$E0F0,,2)(ball)
+
+<h2 class="ref-section" id="walls-playfield-frame">Walls / playfield frame</h2>
+
+<div class="paragraph">
+The indestructible #R$95E0(border) around the brick interior. It is built from
+tile glyphs. The colors below are the ones the game writes.
+</div>
+
+<h3 class="ref-subsection" id="side-wall">Side wall</h3>
+
+<div class="paragraph">
+The #R$969C(band) down the edge opposite the bat. It has the same pattern and
+colors on either edge. Within the band the left column is bright cyan and the right
+bright green. The band repeats every 8 rows. One period is rendered here:
+</div>
+
+#UDGARRAY2,69,2,tindex=1,alpha=0($D9A8;$D9B0,68;$D9D8;$D9E0,68;$D9A8;$D9B0,68;$D998;$D9A0,68;$D9B8;$D9C0,68;$D9B8;$D9C0,68;$D998;$D9A0,68;$D9D8;$D9E0,68)(side_wall)
+
+<h3 class="ref-subsection" id="top-bottom-strip">Top / bottom strip</h3>
+
+<div class="paragraph">
+The #R$9667(strip) along the top and bottom edges. On both edges, its upper row is
+bright cyan and its lower row bright green. It is five segments. Each opens on a post cell, closes on an end cell, and holds
+plain cells between them. The second and fourth segments also hold two cells of
+a second fill. Rendered here is the center segment, both rows:
+</div>
+
+#UDGARRAY8,69,2,tindex=1,alpha=0($D928;$D930;$D930;$D930;$D930;$D930;$D930;$D940;$D948,68;$D950,68;$D950,68;$D950,68;$D950,68;$D950,68;$D950,68;$D960,68)(border_strip)
+
+<h3 class="ref-subsection" id="corners">Corners</h3>
+
+<div class="paragraph">
+The four #R$9610(corner blocks), all bright cyan. Rendered here as they sit on the
+playfield:
+</div>
+
+#UDGTABLE
+{ #UDGARRAY2,69,2,tindex=1,alpha=0($D908;$D910;$D918;$D920)(corner_tl) | #UDGARRAY2,69,2,tindex=1,alpha=0($D978;$D980;$D9E8;$D9F0)(corner_tr) }
+{ #UDGARRAY2,69,2,tindex=1,alpha=0($D9F8;$DA00;$D988;$DA08)(corner_bl) | #UDGARRAY2,69,2,tindex=1,alpha=0($DA10;$DA18;$DA20;$D990)(corner_br) }
+TABLE#
+
+<h2 class="ref-section" id="bricks">Bricks</h2>
+
+<div class="paragraph">
+The brick field is a 9×9 grid of bricks. A brick is a 2×2 block of tile glyphs plus
+one color. Each design appears in up to seven inks, and the brick fixes its ink.
+The table below shows each design once. The #R$921A(tile-glyph groups) entry
+renders each one in every ink it takes.
+</div>
+
+#UDGTABLE(default)
+{ =h Design | =h Brick | =h Slot codes | =h Class | =h Colors (inks used in levels) }
+{ solid | #UDGARRAY2,71,3,tindex=1,alpha=0($DD80;$DD88;$DD90;$DE60)(brick_solid_lo) | $43–$49 | 1 | white }
+{ solid | #UDGARRAY2,69,3,tindex=1,alpha=0($DDB0;$DDB8;$DDC0;$DE60)(brick_solid) | $4A–$50 | 1 | blue, red, magenta, green, cyan, yellow, white }
+{ solid <b>prize</b> | #UDGARRAY2,69,3,tindex=1,alpha=0($DB20;$DE50;$DE58;$DE60)(brick_prize) | $04–$42 | 7–15 | blue, red, magenta, green, cyan, yellow, white }
+{ window | #UDGARRAY2,65,3,tindex=1,alpha=0($DDC8;$DDD0;$DDD8;$DDE0)(brick_window) | $51–$57 | 1 | blue, red, magenta, green, cyan, yellow, white }
+{ rounded | #UDGARRAY2,66,3,tindex=1,alpha=0($DDE8;$DDF0;$DDF8;$DE00)(brick_rounded) | $58–$5E | 1 | red, magenta, green, cyan, yellow, white }
+{ ornate | #UDGARRAY2,66,3,tindex=1,alpha=0($DE08;$DE10;$DE18;$DE20)(brick_ornate) | $5F–$65 | 1 | red, magenta, green, cyan, yellow, white }
+{ hatched | #UDGARRAY2,66,3,tindex=1,alpha=0($DD28;$DD30;$DD38;$DD40)(brick_hatch) | $6D–$73 | 1 | red, magenta, green, cyan, yellow, white }
+{ <b>golden</b> | #UDGARRAY2,69,3,tindex=1,alpha=0($DAC8;$DAD0;$DAD8;$DAE0)(brick_golden) | $01 | 2 <span class="dim">(top-left $59)</span> | cyan }
+{ <b>silver-1</b> | #UDGARRAY2,69,3,tindex=1,alpha=0($DAF8;$DAD0;$DB00;$DB08)(brick_silver1) | $02 | 3 <span class="dim">(top-left $5F)</span> | cyan }
+{ <b>silver-2</b> | #UDGARRAY2,69,3,tindex=1,alpha=0($DB18;$DAD0;$DAD8;$DAE0)(brick_silver2) | $03 | 5 <span class="dim">(top-left $63)</span> | cyan }
+TABLE#
+
+#UDGARRAY2,69,3,tindex=1,alpha=0($DA88;$DA88;$DA88;$DA88)(*sh0)#UDGARRAY2,69,3,tindex=1,alpha=0($DA90;$DA90;$DA90;$DA90)(*sh1)#UDGARRAY2,69,3,tindex=1,alpha=0($DA98;$DA98;$DA98;$DA98)(*sh2)#UDGARRAY2,69,3,tindex=1,alpha=0($DAA0;$DAA0;$DAA0;$DAA0)(*sh3)#UDGARRAY2,69,3,tindex=1,alpha=0($DAA8;$DAA8;$DAA8;$DAA8)(*sh4)#UDGARRAY2,69,3,tindex=1,alpha=0($DAB0;$DAB0;$DAB0;$DAB0)(*sh5)#UDGARRAY2,69,3,tindex=1,alpha=0($DAB8;$DAB8;$DAB8;$DAB8)(*sh6)#UDGARRAY2,69,3,tindex=1,alpha=0($DAC0;$DAC0;$DAC0;$DAC0)(*sh7)#UDGARRAY2,71,3,tindex=1,alpha=0($D900;$D900;$D900;$D900)(*sh8)
+
+<div class="paragraph">
+<div class="inset">#FRAMES(sh0,6;sh1,6;sh2,6;sh3,6;sh4,6;sh5,6;sh6,6;sh7,6;sh8,6)(brick_shatter)</div>
+Shatter – the animation a brick plays as it is destroyed. It is the plain shatter
+in the #R$AB60(break-animation table). The brick's design is gone from the first
+sub-frame. All four quadrants take the same tile.
+</div>
+
+#UDGARRAY2,69,3,tindex=1,alpha=0($DD48;$DAD0;$DAD8;$DAE0)(*gt0)#UDGARRAY2,69,3,tindex=1,alpha=0($DD50;$DAD0;$DAD8;$DAE0)(*gt1)#UDGARRAY2,69,3,tindex=1,alpha=0($DD58;$DAD0;$DAD8;$DAE0)(*gt2)#UDGARRAY2,69,3,tindex=1,alpha=0($DD60;$DD68;$DAD8;$DAE0)(*gt3)#UDGARRAY2,69,3,tindex=1,alpha=0($DD70;$DD78;$DAD8;$DAE0)(*gt4)#UDGARRAY2,69,3,tindex=1,alpha=0($DD60;$DD68;$DAD8;$DAE0)(*gt5)#UDGARRAY2,69,3,tindex=1,alpha=0($DD58;$DAD0;$DAD8;$DAE0)(*gt6)#UDGARRAY2,69,3,tindex=1,alpha=0($DD50;$DAD0;$DAD8;$DAE0)(*gt7)#UDGARRAY2,69,3,tindex=1,alpha=0($DD48;$DAD0;$DAD8;$DAE0)(*gt8)#UDGARRAY2,69,3,tindex=1,alpha=0($DAC8;$DAD0;$DAD8;$DAE0)(*gt9)
+
+<div class="paragraph">
+<div class="inset">#FRAMES(gt0,6;gt1,6;gt2,6;gt3,6;gt4,6;gt5,6;gt6,6;gt7,6;gt8,6;gt9,6)(golden_twinkle)</div>
+Golden-brick twinkle – the golden brick's #R$B0BF(idle flash).
+</div>
+
+<div class="paragraph">
+Two more designs sit in the #R$921A(tile-glyph groups) and the #R$9191(brick attributes): an angry-face brick and a third solid brick.
+</div>
+
+#UDGARRAY2,69,3,tindex=1,alpha=0($DB80;$DB88;$DAD8;$DAE0)(*gg0)#UDGARRAY2,69,3,tindex=1,alpha=0($DB90;$DB98;$DAD8;$DAE0)(*gg1)#UDGARRAY2,69,3,tindex=1,alpha=0($DBA0;$DAD0;$DAD8;$DAE0)(*gg2)#UDGARRAY2,69,3,tindex=1,alpha=0($DBA8;$DAD0;$DBB0;$DAE0)(*gg3)#UDGARRAY2,69,3,tindex=1,alpha=0($DBB8;$DAD0;$DBC0;$DAE0)(*gg4)#UDGARRAY2,69,3,tindex=1,alpha=0($DAC8;$DAD0;$DAD8;$DAE0)(*gg5)
+
+<div class="paragraph">
+<div class="inset">#FRAMES(gg0,6;gg1,6;gg2,6;gg3,6;gg4,6;gg5,6)(golden_gleam)</div>
+Golden-brick gleam – a third golden-brick flash beside the twinkle and the hit flash.
+It is a #R$AC31(sequence in the break-animation table) that nothing plays.
+</div>
+
+<h3 class="ref-subsection" id="prizes">Prizes</h3>
+
+#UDGARRAY2,7,3,tindex=1,alpha=0($DE48,$45;$DE50,$45;$DE58,$45;$DE60,$45)(*pz0)#UDGARRAY2,7,3,tindex=1,alpha=0($DE68,$45;$DE70,$45;$DE78,$45;$DE80,$45)(*pz1)#UDGARRAY2,7,3,tindex=1,alpha=0($DE88,$45;$DE90,$45;$DE98,$45;$DEA0,$45)(*pz2)#UDGARRAY2,7,3,tindex=1,alpha=0($D900,$45;$DEA8,$45;$D900,$45;$DEB0,$45)(*pz3)#UDGARRAY2,7,3,tindex=1,alpha=0($DEB8,$46;$DEC0,$44;$DEC8,$46;$DED0,$44)(*pz4)#UDGARRAY2,7,3,tindex=1,alpha=0($DED8,$46;$DEE0,$44;$DEE8,$46;$DEF0,$44)(*pz5)#UDGARRAY2,7,3,tindex=1,alpha=0($DEF8,$46;$DF00,$44;$DF08,$46;$DF10,$44)(*pz6)
+
+<div class="paragraph">
+<div class="inset">#FRAMES(pz0,6;pz1,6;pz2,6;pz3,6;pz4,6;pz5,6;pz6,6)(prize_reveal)</div>
+The reveal – the animation a prize brick plays as it gives up its prize. Every
+prize plays it; only the glyph left in the cell at the end differs, as the
+glyphs below show.
+</div>
+
+
+#UDGARRAY2,7,3,tindex=1,alpha=0($DCA8,$46;$DCB0,$44;$DCB8,$46;$DCC0,$44)(*sb0)#UDGARRAY2,7,3,tindex=1,alpha=0($DCC8,$46;$DCD0,$44;$DCD8,$46;$DCE0,$44)(*sb1)#UDGARRAY2,7,3,tindex=1,alpha=0($DCE8,$46;$DCF0,$44;$DCF8,$46;$DD00,$44)(*sb2)#UDGARRAY2,7,3,tindex=1,alpha=0($DD08,$46;$DD10,$44;$DD18,$46;$DD20,$44)(*sb3)
+#UDGTABLE(default)
+{ =h Letter | =h Tile(s) | =h Glyph | =h Prize, with its #R$B0DF(effect) }
+{ S | $6C | #UDGARRAY2,7,3,tindex=1,alpha=0($DB60,$46;$DB68,$44;$DB70,$46;$DB78,$44)(prize_S) | Safety net }
+{ G | $79 | #UDGARRAY2,7,3,tindex=1,alpha=0($DBC8,$46;$DBD0,$44;$DBD8,$46;$DB78,$44)(prize_G) | Glue }
+{ B | $7D | #UDGARRAY2,7,3,tindex=1,alpha=0($DBE8,$46;$DBF0,$44;$DBD8,$46;$DC00,$44)(prize_B) | Bomb }
+{ M | $81 | #UDGARRAY2,7,3,tindex=1,alpha=0($DC08,$46;$DC10,$44;$DC18,$46;$DC20,$44)(prize_M) | Missile }
+{ E | $85 | #UDGARRAY2,7,3,tindex=1,alpha=0($DC28,$46;$DC30,$44;$DBD8,$46;$DC40,$44)(prize_E) | Expand }
+{ D | $89 | #UDGARRAY2,7,3,tindex=1,alpha=0($DC48,$46;$DC50,$44;$DBD8,$46;$DC00,$44)(prize_D) | Double bat }
+{ x2 | $8D | #UDGARRAY2,7,3,tindex=1,alpha=0($DC68,$46;$DC70,$44;$DC78,$46;$DC80,$44)(prize_8d) | Double score }
+{ X | $91 | #UDGARRAY2,7,3,tindex=1,alpha=0($DC88,$46;$DC90,$44;$DC98,$46;$DCA0,$44)(prize_X) | Extra life }
+{ animated | $95–$A4 | #FRAMES(sb0,6;sb1,6;sb2,6;sb3,6)(slowball) | Slow ball }
+TABLE#
+
+<h2 class="ref-section" id="inhabitants">Inhabitants and the ball gem</h2>
+
+<div class="paragraph">
+The objects a level spawns during play, ordered by the level whose wave script first spawns each.
+</div>
+
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E1C1,,2;$E1C0,,2;$E1D1,,2;$E1D0,,2)(*death_burst_1)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E1E1,,2;$E1E0,,2;$E1F1,,2;$E1F0,,2)(*death_burst_2)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E201,,2;$E200,,2;$E211,,2;$E210,,2)(*death_burst_3)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E221,,2;$E220,,2;$E231,,2;$E230,,2)(*death_burst_4)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E241,,2;$E240,,2;$E251,,2;$E250,,2)(*death_burst_5)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E261,,2;$E260,,2;$E271,,2;$E270,,2)(*death_burst_6)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E281,,2;$E280,,2;$E291,,2;$E290,,2)(*death_burst_7)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E2A1,,2;$E2A0,,2;$E2B1,,2;$E2B0,,2)(*death_burst_8)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E2C1,,2;$E2C0,,2;$E2D1,,2;$E2D0,,2)(*spawn_flash_1)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E2E1,,2;$E2E0,,2;$E2F1,,2;$E2F0,,2)(*spawn_flash_2)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E301,,2;$E300,,2;$E311,,2;$E310,,2)(*spawn_flash_3)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E321,,2;$E320,,2;$E331,,2;$E330,,2)(*spawn_flash_4)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E301,,2;$E300,,2;$E311,,2;$E310,,2)(*spawn_flash_5)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E2E1,,2;$E2E0,,2;$E2F1,,2;$E2F0,,2)(*spawn_flash_6)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E661,,2;$E660,,2;$E671,,2;$E670,,2)(*orb_chew_1)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E681,,2;$E680,,2;$E691,,2;$E690,,2)(*orb_chew_2)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E6A1,,2;$E6A0,,2;$E6B1,,2;$E6B0,,2)(*orb_chew_3)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E6C1,,2;$E6C0,,2;$E6D1,,2;$E6D0,,2)(*orb_chew_4)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E6E1,,2;$E6E0,,2;$E6F1,,2;$E6F0,,2)(*orb_chew_5)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E701,,2;$E700,,2;$E711,,2;$E710,,2)(*orb_chew_6)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E721,,2;$E720,,2;$E731,,2;$E730,,2)(*orb_chew_7)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E741,,2;$E740,,2;$E751,,2;$E750,,2)(*orb_chew_8)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E761,,2;$E760,,2;$E771,,2;$E770,,2)(*orb_chew_9)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E781,,2;$E780,,2;$E791,,2;$E790,,2)(*orb_chew_10)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E7A1,,2;$E7A0,,2;$E7B1,,2;$E7B0,,2)(*orb_chew_11)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E7C1,,2;$E7C0,,2;$E7D1,,2;$E7D0,,2)(*orb_chew_12)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E7A1,,2;$E7A0,,2;$E7B1,,2;$E7B0,,2)(*orb_chew_13)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E7E1,,2;$E7E0,,2;$E7F1,,2;$E7F0,,2)(*orb_spit_1)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E801,,2;$E800,,2;$E811,,2;$E810,,2)(*orb_spit_2)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E7E1,,2;$E7E0,,2;$E7F1,,2;$E7F0,,2)(*orb_spit_3)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E401,,2;$E400,,2;$E411,,2;$E410,,2)(*comet_1)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E421,,2;$E420,,2;$E431,,2;$E430,,2)(*comet_2)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E441,,2;$E440,,2;$E451,,2;$E450,,2)(*comet_3)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E461,,2;$E460,,2;$E471,,2;$E470,,2)(*hive_1)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E481,,2;$E480,,2;$E491,,2;$E490,,2)(*hive_2)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E4A1,,2;$E4A0,,2;$E4B1,,2;$E4B0,,2)(*hive_3)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E4C1,,2;$E4C0,,2;$E4D1,,2;$E4D0,,2)(*hive_spawn_burst_1)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E4E1,,2;$E4E0,,2;$E4F1,,2;$E4F0,,2)(*hive_spawn_burst_2)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E501,,2;$E500,,2;$E511,,2;$E510,,2)(*hive_spawn_burst_3)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E561,,2;$E560,,2;$E571,,2;$E570,,2)(*bee_1)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E581,,2;$E580,,2;$E591,,2;$E590,,2)(*bee_2)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E5E1,,2;$E5E0,,2;$E5F1,,2;$E5F0,,2)(*starburst_1)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E601,,2;$E600,,2;$E611,,2;$E610,,2)(*starburst_2)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E621,,2;$E620,,2;$E631,,2;$E630,,2)(*starburst_3)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E3C1,,2;$E3C0,,2;$E3D1,,2;$E3D0,,2)(*hockey_mask_armed)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E3E1,,2;$E3E0,,2;$E3F1,,2;$E3F0,,2)(*hockey_mask_unarmed)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E001,,2;$E000,,2;$E011,,2;$E010,,2)(*visor_1)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E021,,2;$E020,,2;$E031,,2;$E030,,2)(*visor_2)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E041,,2;$E040,,2;$E051,,2;$E050,,2)(*visor_3)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E021,,2;$E020,,2;$E031,,2;$E030,,2)(*visor_4)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E841,,2;$E840,,2;$E851,,2;$E850,,2)(*face_monster_1)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E861,,2;$E860,,2;$E871,,2;$E870,,2)(*face_monster_2)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E881,,2;$E880,,2;$E891,,2;$E890,,2)(*face_monster_3)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E861,,2;$E860,,2;$E871,,2;$E870,,2)(*face_monster_4)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E901,,2;$E900,,2;$E911,,2;$E910,,2)(*diamond_1)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E921,,2;$E920,,2;$E931,,2;$E930,,2)(*diamond_2)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E941,,2;$E940,,2;$E951,,2;$E950,,2)(*diamond_3)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E961,,2;$E960,,2;$E971,,2;$E970,,2)(*diamond_4)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E941,,2;$E940,,2;$E951,,2;$E950,,2)(*diamond_5)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E921,,2;$E920,,2;$E931,,2;$E930,,2)(*diamond_6)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E521,,2;$E520,,2;$E531,,2;$E530,,2)(*ufo_1)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E541,,2;$E540,,2;$E551,,2;$E550,,2)(*ufo_2)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E061,,2;$E060,,2;$E071,,2;$E070,,2)(*capsule_1)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E081,,2;$E080,,2;$E091,,2;$E090,,2)(*capsule_2)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E0A1,,2;$E0A0,,2;$E0B1,,2;$E0B0,,2)(*capsule_3)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E0C1,,2;$E0C0,,2;$E0D1,,2;$E0D0,,2)(*capsule_4)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E981,,2;$E980,,2;$E991,,2;$E990,,2)(*dart_1)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E9A1,,2;$E9A0,,2;$E9B1,,2;$E9B0,,2)(*dart_2)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E9C1,,2;$E9C0,,2;$E9D1,,2;$E9D0,,2)(*dart_3)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E9A1,,2;$E9A0,,2;$E9B1,,2;$E9B0,,2)(*dart_4)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($EA61,,2;$EA60,,2;$EA71,,2;$EA70,,2)(*h_rotor_1)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($EA81,,2;$EA80,,2;$EA91,,2;$EA90,,2)(*h_rotor_2)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($EAA1,,2;$EAA0,,2;$EAB1,,2;$EAB0,,2)(*h_rotor_3)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($EAC1,,2;$EAC0,,2;$EAD1,,2;$EAD0,,2)(*h_rotor_4)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($EAE1,,2;$EAE0,,2;$EAF1,,2;$EAF0,,2)(*h_rotor_5)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($EB01,,2;$EB00,,2;$EB11,,2;$EB10,,2)(*h_rotor_6)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E8A1,,2;$E8A0,,2;$E8B1,,2;$E8B0,,2)(*bowling_ball_1)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E8C1,,2;$E8C0,,2;$E8D1,,2;$E8D0,,2)(*bowling_ball_2)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E8E1,,2;$E8E0,,2;$E8F1,,2;$E8F0,,2)(*bowling_ball_3)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E5A1,,2;$E5A0,,2;$E5B1,,2;$E5B0,,2)(*warp_gate_1)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E5C1,,2;$E5C0,,2;$E5D1,,2;$E5D0,,2)(*warp_gate_2)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E9E1,,2;$E9E0,,2;$E9F1,,2;$E9F0,,2)(*wheel_1)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($EA01,,2;$EA00,,2;$EA11,,2;$EA10,,2)(*wheel_2)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($EA21,,2;$EA20,,2;$EA31,,2;$EA30,,2)(*wheel_3)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($EA41,,2;$EA40,,2;$EA51,,2;$EA50,,2)(*wheel_4)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E341,,2;$E340,,2;$E351,,2;$E350,,2)(*gem_fly_1)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E361,,2;$E360,,2;$E371,,2;$E370,,2)(*gem_fly_2)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E381,,2;$E380,,2;$E391,,2;$E390,,2)(*gem_fly_3)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E3A1,,2;$E3A0,,2;$E3B1,,2;$E3B0,,2)(*gem_fly_4)
+
+<div class="sprite-grid">
+<div class="sprite-card" id="obj-face-monster">
+<div class="sprite-name">face monster</div>
+<div class="sprite-stage">#FRAMES(face_monster_1,12;face_monster_2,12;face_monster_3,12;face_monster_4,12)(face_monster)</div>
+<div class="sprite-meta"><span>debuts at Level 1</span><span>run by its #R$CDB1(handler)</span></div>
+<div class="sprite-what">Wanders at random. A ball hit destroys it.</div>
+</div>
+<div class="sprite-card" id="obj-hive">
+<div class="sprite-name">hive</div>
+<div class="sprite-stage"><div class="sprite-take">#FRAMES(hive_1,12;hive_2,12;hive_3,12)(hive)<div class="sprite-phase">idle</div></div><div class="sprite-take">#FRAMES(hive_spawn_burst_1,12;hive_spawn_burst_2,12;hive_spawn_burst_3,12)(hive_spawn_burst)<div class="sprite-phase">spawn burst</div></div></div>
+<div class="sprite-meta"><span>debuts at Level 3</span><span>run by its #R$CEB3(handler)</span></div>
+<div class="sprite-what">Wanders sideways and homes on your bat's row. Spawns bees.</div>
+</div>
+<div class="sprite-card" id="obj-ball-gem">
+<div class="sprite-name">ball gem</div>
+<div class="sprite-stage">#FRAMES(gem_fly_1,4;gem_fly_2,4;gem_fly_3,4;gem_fly_4,4;gem_fly_3,4;gem_fly_2,4)(gem_fly)</div>
+<div class="sprite-meta"><span>debuts at Level 4</span><span>run by its #R$9E89(handler)</span></div>
+<div class="sprite-what">Wanders. A hit from ball A puts ball B in play.</div>
+</div>
+<div class="sprite-card" id="obj-bee">
+<div class="sprite-name">bee</div>
+<div class="sprite-stage">#FRAMES(bee_1,4;bee_2,4)(bee)</div>
+<div class="sprite-meta"><span>a level spawns it from Level 4</span><span>run by its #R$CFB1(handler)</span></div>
+<div class="sprite-what">Flies across at your bat and stings it. A sting freezes your control of the bat until the last ball in play is lost or the next level starts. A hive spawns it from Level 3.</div>
+</div>
+<div class="sprite-card" id="obj-diamond">
+<div class="sprite-name">diamond</div>
+<div class="sprite-stage">#FRAMES(diamond_1,8;diamond_2,8;diamond_3,8;diamond_4,8;diamond_5,8;diamond_6,8)(diamond)</div>
+<div class="sprite-meta"><span>debuts at Level 6</span><span>run by its #R$CE27(handler)</span></div>
+<div class="sprite-what">Homes on the ball.</div>
+</div>
+<div class="sprite-card" id="obj-bowling-ball">
+<div class="sprite-name">bowling ball</div>
+<div class="sprite-stage">#FRAMES(bowling_ball_1,8;bowling_ball_2,8;bowling_ball_3,8)(bowling_ball)</div>
+<div class="sprite-meta"><span>debuts at Level 8</span><span>run by its #R$CE5F(handler)</span></div>
+<div class="sprite-what">Homes on your bat. When it reaches the bat, the bat locks for a moment, and the bowling ball is gone.</div>
+</div>
+<div class="sprite-card" id="obj-warp-gate">
+<div class="sprite-name">warp gate</div>
+<div class="sprite-stage">#FRAMES(warp_gate_1,8;warp_gate_2,8)(warp_gate)</div>
+<div class="sprite-meta"><span>debuts at Level 8</span><span>run by its #R$D47C(handler)</span></div>
+<div class="sprite-what">Sits in your bat's column. Reach it with the bat to skip levels. The ball destroys it.</div>
+</div>
+<div class="sprite-card" id="obj-hockey-mask">
+<div class="sprite-name">hockey mask</div>
+<div class="sprite-stage"><div class="sprite-take">#FRAMES(hockey_mask_armed,8)(hockey_mask_armed)<div class="sprite-phase">armed with a comet</div></div><div class="sprite-take">#FRAMES(hockey_mask_unarmed,8)(hockey_mask_unarmed)<div class="sprite-phase">unarmed</div></div></div>
+<div class="sprite-meta"><span>debuts at Level 11</span><span>run by its #R$D398(handler)</span></div>
+<div class="sprite-what">Travels in a straight line, and turns only at walls. Drops a comet while you hold fire.</div>
+</div>
+<div class="sprite-card" id="obj-capsule">
+<div class="sprite-name">capsule</div>
+<div class="sprite-stage">#FRAMES(capsule_1,8;capsule_2,8;capsule_3,8;capsule_4,8)(capsule)</div>
+<div class="sprite-meta"><span>debuts at Level 12</span><span>run by its #R$D00C(handler)</span></div>
+<div class="sprite-what">Wanders until it walks into a brick, which ends it. The brick takes a hit: a golden brick survives and a silver brick steps down. An orb that gives up becomes one.</div>
+</div>
+<div class="sprite-card" id="obj-orb">
+<div class="sprite-name">orb</div>
+<div class="sprite-stage"><div class="sprite-take">#UDGARRAY2,7,3,2,tindex=1,alpha=0($E641,,2;$E640,,2;$E651,,2;$E650,,2)(orb_hunt)<div class="sprite-phase">hunt</div></div><div class="sprite-take">#FRAMES(orb_chew_1,12;orb_chew_2,12;orb_chew_3,12;orb_chew_4,8;orb_chew_5,8;orb_chew_6,8;orb_chew_7,8;orb_chew_8,8;orb_chew_9,8;orb_chew_10,8;orb_chew_11,8;orb_chew_12,8;orb_chew_13,8)(orb_chew)<div class="sprite-phase">chew</div></div><div class="sprite-take">#FRAMES(orb_spit_1,12;orb_spit_2,12;orb_spit_3,8)(orb_spit)<div class="sprite-phase">spit</div></div><div class="sprite-take">#UDGARRAY2,7,3,2,tindex=1,alpha=0($E821,,2;$E820,,2;$E831,,2;$E830,,2)(orb_ball)<div class="sprite-phase">spat-out ball</div></div></div>
+<div class="sprite-meta"><span>debuts at Level 13</span><span>run by its #R$D05B(handler)</span></div>
+<div class="sprite-what">Hunts the ball, catches it, chews it, and spits it out over your losing edge: the ball is lost. If it cannot catch the ball in time, it turns into a capsule.</div>
+</div>
+<div class="sprite-card" id="obj-visor">
+<div class="sprite-name">visor</div>
+<div class="sprite-stage">#FRAMES(visor_1,8;visor_2,8;visor_3,8;visor_4,8)(visor)</div>
+<div class="sprite-meta"><span>debuts at Level 15</span><span>run by its #R$D20F(handler)</span></div>
+<div class="sprite-what">Sits still for a while, then homes on the ball.</div>
+</div>
+<div class="sprite-card" id="obj-dart">
+<div class="sprite-name">dart</div>
+<div class="sprite-stage">#FRAMES(dart_1,8;dart_2,8;dart_3,8;dart_4,8)(dart)</div>
+<div class="sprite-meta"><span>debuts at Level 17</span><span>run by its #R$D4E8(handler)</span></div>
+<div class="sprite-what">Wanders. When the ball destroys it, the other inhabitants freeze for a while.</div>
+</div>
+<div class="sprite-card" id="obj-starburst">
+<div class="sprite-name">starburst</div>
+<div class="sprite-stage">#FRAMES(starburst_1,4;starburst_2,4;starburst_3,4)(starburst)</div>
+<div class="sprite-meta"><span>debuts at Level 21</span><span>run by its #R$D2C6(handler)</span></div>
+<div class="sprite-what">Wanders. A ball hit knocks it into a slide along the ball's heading, through bricks – golden included. The slide ends at a wall, past your losing edge, or when a ball hits it again.</div>
+</div>
+<div class="sprite-card" id="obj-h-rotor">
+<div class="sprite-name">H-rotor</div>
+<div class="sprite-stage">#FRAMES(h_rotor_1,8;h_rotor_2,8;h_rotor_3,8;h_rotor_4,8;h_rotor_5,8;h_rotor_6,8)(h_rotor)</div>
+<div class="sprite-meta"><span>debuts at Level 24</span><span>run by its #R$D186(handler)</span></div>
+<div class="sprite-what">Travels in a straight line, and turns only at walls.</div>
+</div>
+<div class="sprite-card" id="obj-wheel">
+<div class="sprite-name">wheel</div>
+<div class="sprite-stage">#FRAMES(wheel_1,8;wheel_2,8;wheel_3,8;wheel_4,8)(wheel)</div>
+<div class="sprite-meta"><span>debuts at Level 25</span><span>run by its #R$D1B9(handler)</span></div>
+<div class="sprite-what">Bounces off walls and bricks, and zig-zags up and down as it goes. When one spawns, wheels fill every free inhabitant slot.</div>
+</div>
+<div class="sprite-card" id="obj-comet">
+<div class="sprite-name">comet</div>
+<div class="sprite-stage">#FRAMES(comet_1,4;comet_2,4;comet_3,4)(comet)</div>
+<div class="sprite-meta"><span>a level spawns it from Level 52</span><span>run by its #R$D44B(handler)</span></div>
+<div class="sprite-what">Falls straight down until a wall or a brick stops it. A hockey mask drops it while you hold fire, from Level 11. From Level 52 the level also spawns it on its own.</div>
+</div>
+<div class="sprite-card" id="obj-ufo">
+<div class="sprite-name">UFO</div>
+<div class="sprite-stage">#FRAMES(ufo_1,8;ufo_2,8)(ufo)</div>
+<div class="sprite-meta"><span>run by its #R$CDE8(handler)</span></div>
+<div class="sprite-what">Never appears. The shipped game has no script that spawns it.</div>
+</div>
+</div>
+
+<h3 class="ref-subsection" id="shared-animation">Shared animation</h3>
+
+<div class="paragraph">
+Every animation here is a table of frame pointers, and a sprite listed twice in a row in its table holds twice as long. The #R$9460(ball-gem animation) is one such table.
+</div>
+
+<div class="paragraph">
+Inhabitants and the ball gem spawn in the spawn flash. A comet that a hockey mask drops skips it and appears at once. An inhabitant destroyed in play dies in the death burst.
+</div>
+
+<div class="sprite-grid">
+<div class="sprite-card" id="obj-spawn-flash">
+<div class="sprite-name">spawn flash</div>
+<div class="sprite-stage">#FRAMES(spawn_flash_1,8;spawn_flash_2,8;spawn_flash_3,8;spawn_flash_4,8;spawn_flash_5,4;spawn_flash_6,4)(spawn_flash)</div>
+<div class="sprite-meta"><span>run by the #R$CBFE(reaction state machine)</span></div>
+<div class="sprite-what">An inhabitant as it spawns.</div>
+</div>
+<div class="sprite-card" id="obj-death-burst">
+<div class="sprite-name">death burst</div>
+<div class="sprite-stage">#FRAMES(death_burst_1,8;death_burst_2,8;death_burst_3,8;death_burst_4,8;death_burst_5,8;death_burst_6,8;death_burst_7,8;death_burst_8,8)(death_burst)</div>
+<div class="sprite-meta"><span>run by the #R$CBFE(reaction state machine)</span></div>
+<div class="sprite-what">An inhabitant dying.</div>
+</div>
+</div>

@@ -1,0 +1,42 @@
+[Poke:infinite_lives:Infinite lives]
+<code>POKE 46565,0</code>
+
+A lost ball costs no life. The poke patches #R$B5E0(the routine that takes a life).
+
+[Poke:level_select:Start on any level]
+<code>POKE 36594,121</code><br>
+<code>POKE 36564,n</code><br>
+<code>POKE 36600,3</code><br>
+<code>POKE 36601,0</code>
+
+A new game starts on the chosen level, with the usual 3 lives. Use 0 for LEVEL 1,
+up to 99 for LEVEL 100. The pokes patch #R$8ED3(the new-game setup). They cannot be combined with
+the poke for the number of lives, which writes the same address.
+
+[Poke:starting_lives:Start with any number of lives]
+<code>POKE 36564,n</code>
+
+Every new game starts with two lives more than n. The game's own value is 1, for 3 lives.
+Extra lives stop only at exactly 25, so a count that starts higher goes up with each extra life.
+The poke patches #R$8ED3(the new-game setup).
+
+[Poke:bee_sting:The bee's sting leaves the bat under your control]
+<code>POKE 53241,0</code>
+
+The bat stays under your control when a bee reaches it. Everything else about the
+bee stays the same. The poke patches #R$CFB1(the bee's handler).
+
+[Poke:ball_speed_ceiling:Ball speeds above 6 on the options screen]
+<code>POKE 49458,n</code>
+
+The BALL SPEED option on the options screen cycles from 1 up to one less than n. The game's own
+value is 7. A speed above 9 shows as a character other than a digit. A speed
+above 6 also escapes the in-rally cap, so the ball speeds up again at every rally
+interval. The poke
+patches #R$C073(the options screen).
+
+[Poke:rally_acceleration:Stretch the rally acceleration]
+<code>POKE 36613,255</code>
+
+Each new game starts the rally interval at 255 bounces. The game's own start is
+20 bounces. The interval still shortens as the levels go on. The poke patches #R$8ED3(the new-game setup).

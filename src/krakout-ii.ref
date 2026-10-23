@@ -1,0 +1,565 @@
+[Page:krakout-ii]
+PageContent=#INCLUDE(KrakoutIIContent)
+
+[KrakoutIIContent]
+<h2 class="ref-section" id="the-release">The release</h2>
+
+<div class="paragraph">
+Krakout II is a 1988 modification of this game by Firefly Software of Poland
+(<a href="https://spectrumcomputing.co.uk/entry/35831/ZX-Spectrum/Krakout_II">ZXDB entry 35831</a>).
+</div>
+
+<div class="paragraph">
+Its #R$6754(level layouts) and some of its texts differ from this game's.
+#R$B9D2(The routine that draws the object pool) differs in one byte. It skips an object whose Y is 175
+or more, where this game skips one from Y 167.
+</div>
+
+<h2 class="ref-section" id="loading-screen">Loading screen</h2>
+
+<img alt="Krakout II loading screen" src="images/krakout-ii-loading-screen.png" />
+
+<h2 class="ref-section" id="the-texts">The texts</h2>
+
+#TABLE(default,centre)
+{ =h Text | =h Change }
+{ The name in the highest-ranked #R$B67E(default high-score entry) | <div class="text-diff"><samp class="text-del">TOM WAITS</samp><samp class="text-ins">COMMUNARDS</samp></div> }
+{ The menu's #R$BEDF(copyright line) | <div class="text-diff"><samp class="text-del">@ 1987 GREMLIN GRAPHICS.</samp><samp class="text-ins">@ 1988 FIREFLY SOFTWARE.</samp></div> }
+{ The #R$C443(credits scroll) | <div class="text-diff"><samp class="text-del">KRAKOUT - SPECCY CONVERSION BY GREG HOLMES,ANDY GREEN - DESIGN BOB TOONE - GRAFIX TEZ LLOYD - NOT DROID  &amp; STEVIE WEEVIE KERRY - MUSIC BY BENN DAGLISH - THANKS TO SHAUN &amp; MAD PIERRE FOR THE POP HL'S HELLO TO CHIGLEY,CLISSY,BUCK,FUNGI,PINKY,MARCO AND A SPECIAL HELLO TO PSY THE HEROINE , NOT FORGETTING OUR RASTUS!  BY THE WAY THE SHIELD ONLY LASTS FOR 23 ALLIGATORS !!</samp><samp class="text-ins">* KRAKOUT 2++ * WITH MEGA TRAINER @ 1988 FIREFLY SOFTWARE LIMITED. WRITTEN BY BILL GILBERT IN 27TH APRIL ANNO DOMINI 1988. MEGA TRAINER BY PHONEX 1988. MEGA GREETINGS TO COLOR MAGIC. SPECIAL GREETINGS TO PHONEX,MARCIN,MACIEK,DAREK,PIOTREK,ALF,OLO,M AND Z,MAC,JAMES. NORMAL GREETINGS TO ALL HACKERS USERS SINCLAIR COMPUTER.</samp></div> }
+TABLE#
+
+<h2 class="ref-section" id="the-bricks">The bricks</h2>
+
+<div class="paragraph">
+Krakout II's levels place a brick design that this game's levels never place:
+the angry face, in every ink. Its tiles and colors come from this game's
+#R$921A(tile-glyph groups) and #R$9191(brick attributes), which Krakout II
+leaves unchanged.
+</div>
+
+#UDGTABLE(default)
+{ =h Design | =h Inks }
+{ angry face | #UDGARRAY2,65,3,tindex=1,alpha=0($DD98;$DDA0;$DDA8;$DCA0)(krakout-ii-angry-face-1)#UDGARRAY2,66,3,tindex=1,alpha=0($DD98;$DDA0;$DDA8;$DCA0)(krakout-ii-angry-face-2)#UDGARRAY2,67,3,tindex=1,alpha=0($DD98;$DDA0;$DDA8;$DCA0)(krakout-ii-angry-face-3)#UDGARRAY2,68,3,tindex=1,alpha=0($DD98;$DDA0;$DDA8;$DCA0)(krakout-ii-angry-face-4)#UDGARRAY2,69,3,tindex=1,alpha=0($DD98;$DDA0;$DDA8;$DCA0)(krakout-ii-angry-face-5)#UDGARRAY2,70,3,tindex=1,alpha=0($DD98;$DDA0;$DDA8;$DCA0)(krakout-ii-angry-face-6)#UDGARRAY2,71,3,tindex=1,alpha=0($DD98;$DDA0;$DDA8;$DCA0)(krakout-ii-angry-face-7) }
+UDGTABLE#
+
+<h2 class="ref-section" id="level-by-level">Level by level</h2>
+
+<div class="paragraph">
+One card per level, in level order, set as on the #LINK(Levels)(level set)
+page. Each level keeps this game's #R$86F8(spawn cells) and #R$8888(wave script)
+for its level index.
+</div>
+
+<div class="paragraph">
+Level 21's layout opens with an extra empty cell, which moves it and every
+later layout one cell along. Read one cell later, the layouts of levels 21 to
+100 form whole 9×9 designs. As the game draws them, each design sits one column
+to the right, and its rightmost column wraps to the left edge one row down. Up to
+level 99, a design's bottom-right cell falls into the next level's layout, where
+the game draws it in the top-left cell. A brick in that cell is a stray from the
+previous design. Level 100's bottom-right cell lies in the spawn-cell table, and
+the game never draws it.
+</div>
+
+<div class="level-grid">
+<div class="level-card">
+<div class="level-number">Level 1</div>
+<div class="level-field"><img alt="Level 1 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-00.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;4</span><span class="pool-none">empty&#215;4</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 2</div>
+<div class="level-field"><img alt="Level 2 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-01.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;6</span><span class="pool-none">empty&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 3</div>
+<div class="level-field"><img alt="Level 3 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-02.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;4</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hive.png" alt="hive" width="24" height="24" />&#215;3</span><span class="pool-none">empty&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 4</div>
+<div class="level-field"><img alt="Level 4 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-03.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/gem_fly.png" alt="ball gem" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bee.png" alt="bee" width="24" height="24" />&#215;5</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 5</div>
+<div class="level-field"><img alt="Level 5 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-04.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/gem_fly.png" alt="ball gem" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;6</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 6</div>
+<div class="level-field"><img alt="Level 6 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-05.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;8</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 7</div>
+<div class="level-field"><img alt="Level 7 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-06.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;5</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hive.png" alt="hive" width="24" height="24" />&#215;3</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 8</div>
+<div class="level-field"><img alt="Level 8 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-07.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;4</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/warp_gate.png" alt="warp gate" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 9</div>
+<div class="level-field"><img alt="Level 9 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-08.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;3</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 10</div>
+<div class="level-field"><img alt="Level 10 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-09.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;4</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hive.png" alt="hive" width="24" height="24" />&#215;4</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 11</div>
+<div class="level-field"><img alt="Level 11 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-10.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hive.png" alt="hive" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hockey_mask_armed.png" alt="hockey mask" width="24" height="24" />&#215;3</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 12</div>
+<div class="level-field"><img alt="Level 12 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-11.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;5</span><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;3</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 13</div>
+<div class="level-field"><img alt="Level 13 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-12.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;4</span><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/orb_hunt.png" alt="orb" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 14</div>
+<div class="level-field"><img alt="Level 14 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-13.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/gem_fly.png" alt="ball gem" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;4</span><span class="pool-none">empty&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 15</div>
+<div class="level-field"><img alt="Level 15 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-14.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;4</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hive.png" alt="hive" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/visor.png" alt="visor" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 16</div>
+<div class="level-field"><img alt="Level 16 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-15.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/visor.png" alt="visor" width="24" height="24" />&#215;3</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 17</div>
+<div class="level-field"><img alt="Level 17 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-16.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/warp_gate.png" alt="warp gate" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 18</div>
+<div class="level-field"><img alt="Level 18 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-17.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/orb_hunt.png" alt="orb" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;4</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 19</div>
+<div class="level-field"><img alt="Level 19 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-18.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;4</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 20</div>
+<div class="level-field"><img alt="Level 20 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-19.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;4</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 21</div>
+<div class="level-field"><img alt="Level 21 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-20.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/starburst.png" alt="starburst" width="24" height="24" />&#215;8</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 22</div>
+<div class="level-field"><img alt="Level 22 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-21.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/gem_fly.png" alt="ball gem" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/visor.png" alt="visor" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 23</div>
+<div class="level-field"><img alt="Level 23 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-22.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/orb_hunt.png" alt="orb" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/starburst.png" alt="starburst" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;3</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 24</div>
+<div class="level-field"><img alt="Level 24 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-23.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;6</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 25</div>
+<div class="level-field"><img alt="Level 25 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-24.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/wheel.png" alt="wheel" width="24" height="24" />&#215;6</span><span class="pool-item"><img class="pool-icon" src="images/udgs/starburst.png" alt="starburst" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 26</div>
+<div class="level-field"><img alt="Level 26 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-25.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hockey_mask_armed.png" alt="hockey mask" width="24" height="24" />&#215;3</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 27</div>
+<div class="level-field"><img alt="Level 27 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-26.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;5</span><span class="pool-item"><img class="pool-icon" src="images/udgs/wheel.png" alt="wheel" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/warp_gate.png" alt="warp gate" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 28</div>
+<div class="level-field"><img alt="Level 28 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-27.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;4</span><span class="pool-item"><img class="pool-icon" src="images/udgs/orb_hunt.png" alt="orb" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 29</div>
+<div class="level-field"><img alt="Level 29 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-28.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/gem_fly.png" alt="ball gem" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hive.png" alt="hive" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/starburst.png" alt="starburst" width="24" height="24" />&#215;3</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 30</div>
+<div class="level-field"><img alt="Level 30 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-29.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;4</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hive.png" alt="hive" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/visor.png" alt="visor" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 31</div>
+<div class="level-field"><img alt="Level 31 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-30.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hockey_mask_armed.png" alt="hockey mask" width="24" height="24" />&#215;7</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 32</div>
+<div class="level-field"><img alt="Level 32 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-31.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hive.png" alt="hive" width="24" height="24" />&#215;6</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bee.png" alt="bee" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 33</div>
+<div class="level-field"><img alt="Level 33 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-32.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;4</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 34</div>
+<div class="level-field"><img alt="Level 34 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-33.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/visor.png" alt="visor" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hockey_mask_armed.png" alt="hockey mask" width="24" height="24" />&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 35</div>
+<div class="level-field"><img alt="Level 35 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-34.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;4</span><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 36</div>
+<div class="level-field"><img alt="Level 36 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-35.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;7</span><span class="pool-item"><img class="pool-icon" src="images/udgs/orb_hunt.png" alt="orb" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 37</div>
+<div class="level-field"><img alt="Level 37 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-36.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/starburst.png" alt="starburst" width="24" height="24" />&#215;5</span><span class="pool-item"><img class="pool-icon" src="images/udgs/warp_gate.png" alt="warp gate" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 38</div>
+<div class="level-field"><img alt="Level 38 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-37.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/gem_fly.png" alt="ball gem" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 39</div>
+<div class="level-field"><img alt="Level 39 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-38.png" /></div>
+<div class="level-pool"><span class="pool-none">empty&#215;8</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 40</div>
+<div class="level-field"><img alt="Level 40 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-39.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/wheel.png" alt="wheel" width="24" height="24" />&#215;8</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 41</div>
+<div class="level-field"><img alt="Level 41 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-40.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/orb_hunt.png" alt="orb" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/wheel.png" alt="wheel" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/starburst.png" alt="starburst" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/warp_gate.png" alt="warp gate" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 42</div>
+<div class="level-field"><img alt="Level 42 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-41.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bee.png" alt="bee" width="24" height="24" />&#215;5</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 43</div>
+<div class="level-field"><img alt="Level 43 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-42.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 44</div>
+<div class="level-field"><img alt="Level 44 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-43.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;4</span><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 45</div>
+<div class="level-field"><img alt="Level 45 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-44.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hive.png" alt="hive" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;3</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 46</div>
+<div class="level-field"><img alt="Level 46 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-45.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/starburst.png" alt="starburst" width="24" height="24" />&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 47</div>
+<div class="level-field"><img alt="Level 47 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-46.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/gem_fly.png" alt="ball gem" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;6</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 48</div>
+<div class="level-field"><img alt="Level 48 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-47.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/hive.png" alt="hive" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/visor.png" alt="visor" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 49</div>
+<div class="level-field"><img alt="Level 49 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-48.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/starburst.png" alt="starburst" width="24" height="24" />&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 50</div>
+<div class="level-field"><img alt="Level 50 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-49.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/visor.png" alt="visor" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/warp_gate.png" alt="warp gate" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 51</div>
+<div class="level-field"><img alt="Level 51 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-50.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hive.png" alt="hive" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/orb_hunt.png" alt="orb" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hockey_mask_armed.png" alt="hockey mask" width="24" height="24" />&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 52</div>
+<div class="level-field"><img alt="Level 52 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-51.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/visor.png" alt="visor" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/comet.png" alt="comet" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 53</div>
+<div class="level-field"><img alt="Level 53 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-52.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bee.png" alt="bee" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/starburst.png" alt="starburst" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 54</div>
+<div class="level-field"><img alt="Level 54 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-53.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/hive.png" alt="hive" width="24" height="24" />&#215;4</span><span class="pool-item"><img class="pool-icon" src="images/udgs/comet.png" alt="comet" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 55</div>
+<div class="level-field"><img alt="Level 55 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-54.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hive.png" alt="hive" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/comet.png" alt="comet" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 56</div>
+<div class="level-field"><img alt="Level 56 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-55.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/gem_fly.png" alt="ball gem" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/orb_hunt.png" alt="orb" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 57</div>
+<div class="level-field"><img alt="Level 57 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-56.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/visor.png" alt="visor" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/starburst.png" alt="starburst" width="24" height="24" />&#215;4</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 58</div>
+<div class="level-field"><img alt="Level 58 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-57.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/wheel.png" alt="wheel" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 59</div>
+<div class="level-field"><img alt="Level 59 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-58.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/orb_hunt.png" alt="orb" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/starburst.png" alt="starburst" width="24" height="24" />&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 60</div>
+<div class="level-field"><img alt="Level 60 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-59.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/hive.png" alt="hive" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/orb_hunt.png" alt="orb" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 61</div>
+<div class="level-field"><img alt="Level 61 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-60.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/comet.png" alt="comet" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/warp_gate.png" alt="warp gate" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 62</div>
+<div class="level-field"><img alt="Level 62 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-61.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;6</span><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/wheel.png" alt="wheel" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 63</div>
+<div class="level-field"><img alt="Level 63 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-62.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/gem_fly.png" alt="ball gem" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;5</span><span class="pool-item"><img class="pool-icon" src="images/udgs/visor.png" alt="visor" width="24" height="24" />&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 64</div>
+<div class="level-field"><img alt="Level 64 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-63.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/wheel.png" alt="wheel" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hockey_mask_armed.png" alt="hockey mask" width="24" height="24" />&#215;4</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 65</div>
+<div class="level-field"><img alt="Level 65 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-64.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hive.png" alt="hive" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/orb_hunt.png" alt="orb" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 66</div>
+<div class="level-field"><img alt="Level 66 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-65.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/bee.png" alt="bee" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/visor.png" alt="visor" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/warp_gate.png" alt="warp gate" width="24" height="24" />&#215;2</span><span class="pool-none">empty&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 67</div>
+<div class="level-field"><img alt="Level 67 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-66.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/wheel.png" alt="wheel" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/visor.png" alt="visor" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/starburst.png" alt="starburst" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hockey_mask_armed.png" alt="hockey mask" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 68</div>
+<div class="level-field"><img alt="Level 68 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-67.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/starburst.png" alt="starburst" width="24" height="24" />&#215;1</span><span class="pool-none">empty&#215;5</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 69</div>
+<div class="level-field"><img alt="Level 69 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-68.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;5</span><span class="pool-item"><img class="pool-icon" src="images/udgs/comet.png" alt="comet" width="24" height="24" />&#215;3</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 70</div>
+<div class="level-field"><img alt="Level 70 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-69.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/gem_fly.png" alt="ball gem" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 71</div>
+<div class="level-field"><img alt="Level 71 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-70.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/hockey_mask_armed.png" alt="hockey mask" width="24" height="24" />&#215;6</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 72</div>
+<div class="level-field"><img alt="Level 72 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-71.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;5</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 73</div>
+<div class="level-field"><img alt="Level 73 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-72.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/wheel.png" alt="wheel" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/starburst.png" alt="starburst" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/warp_gate.png" alt="warp gate" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 74</div>
+<div class="level-field"><img alt="Level 74 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-73.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/starburst.png" alt="starburst" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 75</div>
+<div class="level-field"><img alt="Level 75 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-74.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/gem_fly.png" alt="ball gem" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/orb_hunt.png" alt="orb" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/starburst.png" alt="starburst" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 76</div>
+<div class="level-field"><img alt="Level 76 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-75.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/gem_fly.png" alt="ball gem" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hive.png" alt="hive" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bee.png" alt="bee" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hockey_mask_armed.png" alt="hockey mask" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/comet.png" alt="comet" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 77</div>
+<div class="level-field"><img alt="Level 77 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-76.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/starburst.png" alt="starburst" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 78</div>
+<div class="level-field"><img alt="Level 78 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-77.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/bee.png" alt="bee" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/wheel.png" alt="wheel" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 79</div>
+<div class="level-field"><img alt="Level 79 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-78.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/starburst.png" alt="starburst" width="24" height="24" />&#215;6</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 80</div>
+<div class="level-field"><img alt="Level 80 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-79.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bee.png" alt="bee" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/wheel.png" alt="wheel" width="24" height="24" />&#215;3</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 81</div>
+<div class="level-field"><img alt="Level 81 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-80.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bee.png" alt="bee" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/visor.png" alt="visor" width="24" height="24" />&#215;6</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 82</div>
+<div class="level-field"><img alt="Level 82 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-81.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/gem_fly.png" alt="ball gem" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hockey_mask_armed.png" alt="hockey mask" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/warp_gate.png" alt="warp gate" width="24" height="24" />&#215;1</span><span class="pool-none">empty&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 83</div>
+<div class="level-field"><img alt="Level 83 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-82.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;4</span><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/orb_hunt.png" alt="orb" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 84</div>
+<div class="level-field"><img alt="Level 84 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-83.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/gem_fly.png" alt="ball gem" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/starburst.png" alt="starburst" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/comet.png" alt="comet" width="24" height="24" />&#215;3</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 85</div>
+<div class="level-field"><img alt="Level 85 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-84.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/orb_hunt.png" alt="orb" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/starburst.png" alt="starburst" width="24" height="24" />&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 86</div>
+<div class="level-field"><img alt="Level 86 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-85.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;6</span><span class="pool-item"><img class="pool-icon" src="images/udgs/wheel.png" alt="wheel" width="24" height="24" />&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 87</div>
+<div class="level-field"><img alt="Level 87 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-86.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bee.png" alt="bee" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/visor.png" alt="visor" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hockey_mask_armed.png" alt="hockey mask" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/comet.png" alt="comet" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 88</div>
+<div class="level-field"><img alt="Level 88 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-87.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;2</span><span class="pool-none">empty&#215;4</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 89</div>
+<div class="level-field"><img alt="Level 89 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-88.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/gem_fly.png" alt="ball gem" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hive.png" alt="hive" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bee.png" alt="bee" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 90</div>
+<div class="level-field"><img alt="Level 90 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-89.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/orb_hunt.png" alt="orb" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/starburst.png" alt="starburst" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/warp_gate.png" alt="warp gate" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 91</div>
+<div class="level-field"><img alt="Level 91 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-90.png" /></div>
+<div class="level-pool"><span class="pool-none">empty&#215;8</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 92</div>
+<div class="level-field"><img alt="Level 92 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-91.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;4</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hive.png" alt="hive" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 93</div>
+<div class="level-field"><img alt="Level 93 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-92.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/gem_fly.png" alt="ball gem" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bee.png" alt="bee" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/visor.png" alt="visor" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 94</div>
+<div class="level-field"><img alt="Level 94 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-93.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bee.png" alt="bee" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/comet.png" alt="comet" width="24" height="24" />&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 95</div>
+<div class="level-field"><img alt="Level 95 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-94.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/capsule.png" alt="capsule" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/visor.png" alt="visor" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/warp_gate.png" alt="warp gate" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 96</div>
+<div class="level-field"><img alt="Level 96 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-95.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/h_rotor.png" alt="H-rotor" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/visor.png" alt="visor" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/starburst.png" alt="starburst" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 97</div>
+<div class="level-field"><img alt="Level 97 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-96.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;4</span><span class="pool-item"><img class="pool-icon" src="images/udgs/visor.png" alt="visor" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/starburst.png" alt="starburst" width="24" height="24" />&#215;2</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 98</div>
+<div class="level-field"><img alt="Level 98 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-97.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/diamond.png" alt="diamond" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bowling_ball.png" alt="bowling ball" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/wheel.png" alt="wheel" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/comet.png" alt="comet" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/dart.png" alt="dart" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 99</div>
+<div class="level-field"><img alt="Level 99 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-98.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/gem_fly.png" alt="ball gem" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/face_monster.png" alt="face monster" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/hive.png" alt="hive" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/comet.png" alt="comet" width="24" height="24" />&#215;1</span></div>
+</div>
+<div class="level-card">
+<div class="level-number">Level 100</div>
+<div class="level-field"><img alt="Level 100 brick field with its spawn cells outlined" src="images/levels-krakout-ii/level-index-99.png" /></div>
+<div class="level-pool"><span class="pool-item"><img class="pool-icon" src="images/udgs/hive.png" alt="hive" width="24" height="24" />&#215;1</span><span class="pool-item"><img class="pool-icon" src="images/udgs/bee.png" alt="bee" width="24" height="24" />&#215;3</span><span class="pool-item"><img class="pool-icon" src="images/udgs/visor.png" alt="visor" width="24" height="24" />&#215;2</span><span class="pool-item"><img class="pool-icon" src="images/udgs/comet.png" alt="comet" width="24" height="24" />&#215;2</span></div>
+</div>
+</div>

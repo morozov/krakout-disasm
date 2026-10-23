@@ -1,0 +1,124 @@
+[Page:Glossary]
+SectionPrefix=Term
+
+[Term:ball:Ball A and ball B]
+Ball A is the ball the game serves. Ball B joins it when the game puts a second
+one into play.
+
+[Term:ball_state_record:Ball state record]
+Everything the game knows about one ball in flight – where it is heading, how
+fast, and what it last bounced off. Ball A and ball B each have one.
+
+[Term:brick_index:Brick index]
+A brick's place in the brick field as a single number, 0 to 80. It counts along
+each row in turn.
+
+[Term:brick_slot:Brick slot]
+One of the 81 positions in the brick field. A slot may contain a brick or be empty.
+
+[Term:brick_state_map:Brick state map]
+One entry per brick slot: the class of its break animation and the current
+sub-frame of that animation, or none for a settled slot. An entry that holds
+the finished marker has a revealed glyph at rest in the cell.
+
+
+[Term:dirty_counter:Dirty counter]
+A mark on one screen cell. It says the cell's picture changed and the screen does not
+show it yet.
+
+[Term:durability_class:Durability class]
+How a brick stands up to hits: how many hits it survives, and what it
+leaves behind when it breaks.
+
+[Term:frame:Frame]
+One pass of the game's main loop. It lasts as long as that pass's work takes.
+
+
+[Term:heading_code:Heading code]
+Which way a ball or another object travels, as one of 72 headings around the
+circle.
+
+[Term:level_index:Level index]
+Which level record is in play, counted from 0.
+
+[Term:logic_record:Logic record]
+An object's movement state: its heading, its speed and its animation frame.
+
+
+[Term:losing_edge:Losing edge]
+The edge the bat plays from, where a ball that gets past it is lost.
+
+[Term:object_pool:Object pool]
+The nine slots that hold everything the game moves and draws.
+
+[Term:pool_slot:Pool slot]
+One of the object pool's nine places.
+
+
+[Term:principal_heading:Principal heading]
+One of eight headings: the four along the axes, and the four diagonals at 41°,
+139°, 221° and 319°.
+
+[Term:return_window:Return window]
+The band around the bat inside which a ball counts as returned.
+
+[Term:slot_code:Slot code]
+What the level designer put in a brick slot: which brick design stands there, or
+nothing.
+
+[Term:source_bank:Source bank]
+The sprite bitmaps as loaded, from which the sprite bank is filled.
+
+[Term:sprite_bank:Sprite bank]
+The sprite bitmaps the game draws from, one 16×16 bitmap per animation frame.
+
+[Term:terminator:Terminator]
+A byte that marks the end of a run whose length is not written down.
+
+[Term:tile_code:Tile code]
+Which 8×8 picture stands in a cell of the tile map.
+
+[Term:tilemap:Tile map]
+What stands in every cell of the screen, one tile code per cell. This is the
+surface the game reads to find out what is in a cell.
+
+[Term:wave_script:Wave script]
+The eight things a level can spawn. Each one is an object type, or nothing.
+
+[Term:work_buffer:Work buffer]
+The dirty counters, one per screen cell.
+
+; validate_glossary_terms.py reads this registry from glossary.ref and fails the
+; build on a right-hand form in any other file. A row records a synonym; a word
+; with a meaning of its own is not one. A row qualified by grammatical role is
+; left to a hand pass. "centre" is also SkoolKit's alignment keyword, and the
+; high-score labels use "highscore".
+[TerminologyRegistry]
+#TABLE(default)
+{ =h Write | =h Not }
+{ bat | paddle }
+{ H-rotor | rotor }
+{ prize | powerup }
+{ tune, title tune | jingle, melody, front-end tune, attract tune, attract jingle, in-game tune }
+{ terminator | end marker, sentinel }
+{ sprite record, logic record, ball state record | object record, behavior record, ball record, ball object record, ball's state record }
+{ brick state map | brick-state map, brick map }
+{ heading code, principal heading | direction code, octant boundary, principal direction }
+{ dirty counter, work buffer | change count, work-buffer count, dirty-count buffer, dirty-counter map }
+{ name-entry strip | letter strip, character strip }
+{ losing edge | the bat wall, the bat's wall }
+{ brick-field sweep | field sweep }
+{ first overlap operand, second overlap operand | first object, second object }
+{ afterward | afterwards }
+{ center, centered | centre, centred }
+{ non-zero | nonzero }
+{ high-score | hi-score }
+{ zeroes, the verb – a routine zeroes a block | zeros as the verb }
+{ front end as a noun | front-end as a noun }
+{ sprite bank, source bank | working bank, working slot, working copy, working sprite, master bitmap, master bank }
+{ tile map | the grid as a name for the surface }
+{ back buffer | back-buffer as a noun }
+{ face monster, bowling ball, warp gate, hockey mask, ball gem | face-monster, bowling-ball, warp-gate, hockey-mask, ball-gem as a bare noun }
+{ double bat | doublebat }
+{ spawn, spawns, spawned | materialize, materializes, materialized, materialization }
+TABLE#

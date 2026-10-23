@@ -1,0 +1,70 @@
+# Spans the oracle samples every frame, as [address, length]. Each sits outside
+# every permuted span. $5B2C-$5B2D is skipped because it holds a pointer into
+# the break-animation table, which a permute moves.
+regions = [[0x5B00, 0x2C], [0x5B2E, 0x6E], [0x8E9C, 0x04], [0x8F67, 0x52]]
+
+# Moves title_tune, 257 bytes, to just before draw_playfield_border, which shifts
+# draw_playfield_border and everything up to the tune by 257.
+[permute.tune]
+move = "title_tune"
+before = "draw_playfield_border:"
+
+# Moves spawn_cell_table, 400 bytes, to just before the program entry block,
+# which shifts the wave scripts down by 400.
+[permute.spawn]
+move = "spawn_cell_table"
+before = "; Program entry and the main per-frame loop"
+
+# The negative control for the tune permute, which moves manage_objects: one
+# operand assembled as a raw address, so that build's trace must diverge. The
+# spawn permute leaves manage_objects in place.
+[control]
+replace = "CALL manage_objects"
+with = "CALL $9CB3"
+
+# Key scripts, as [key, frames held]; "" holds no key. P is up and L is down.
+[scripts]
+short = [
+  ["", 200],   # title screen
+  ["0", 10],   # start
+  ["", 70],    # level draw-in
+  [" ", 6],    # serve
+  ["", 20],
+  ["p", 30],
+  ["", 10],
+  ["l", 40],
+  ["", 10],
+  [" ", 4],
+  ["", 20],
+  ["p", 25],
+  ["", 15],
+  ["l", 25],
+  ["", 15],
+  ["", 100],
+]
+# The waits are generous: an early loss only adds idle frames.
+long = [
+  ["", 1700],  # title screen, tune and attract scroller
+  ["0", 10],
+  ["", 70],
+  [" ", 6],
+  ["", 20],
+  ["p", 30],
+  ["", 10],
+  ["l", 40],
+  ["", 10],
+  [" ", 4],
+  ["", 20],
+  ["p", 25],
+  ["", 15],
+  ["l", 25],
+  ["", 15],
+  ["", 400],
+  [" ", 6],    # serve, then let the ball go, once per life
+  ["", 500],
+  [" ", 6],
+  ["", 500],
+  [" ", 6],
+  ["", 500],
+  ["", 900],   # game over, then the table
+]

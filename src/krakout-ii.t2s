@@ -1,0 +1,16 @@
+; Block 3 is the loading screen with its first two thirds swapped, in the bitmap
+; and the attributes; 23296-25343 is the scratch space for swapping them back.
+; Block 4 is the program, each byte stored XORed with 100.
+
+https://spectrumcomputing.co.uk/zxdb/sinclair/entries/0035831/KrakoutII.tap.zip
+--tape-sum f360f5d8d1b3117f4601a81642adc2f8
+--ram load=3,16384
+--ram move=16384,2048,23296
+--ram move=18432,2048,16384
+--ram move=23296,2048,18432
+--ram move=22528,256,23296
+--ram move=22784,256,22528
+--ram move=23296,256,22784
+--ram poke=23296-25343,0
+--ram load=4,26450
+--ram poke=26450-65179,^100

@@ -1,0 +1,297 @@
+[Page:Defects]
+PageContent=#INCLUDE(DefectsContent)
+
+[DefectsContent]
+<div class="paragraph">
+A player good enough to clear all 100 levels may never get to. Before they do, the
+playfield can freeze, or the ball can fall into a loop it cannot leave on its own.
+</div>
+
+<table class="default">
+<caption>The defects, worst first</caption>
+<thead>
+<tr>
+<th scope="col">Defect</th>
+<th scope="col">What breaks</th>
+<th scope="col">Cost</th>
+<th scope="col">Needs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#wedge">Wedge</a></td>
+<td>Ball pinned against a golden brick's face; the level cannot clear and the score climbs</td>
+<td>Unwinnable</td>
+<td>A ball that meets a golden brick's face almost along it</td>
+</tr>
+<tr>
+<td><a href="#shuttle">Shuttle</a></td>
+<td>Ball alternates between two golden bricks</td>
+<td>Unwinnable</td>
+<td>A diagonal ball that reflects at an inside corner of solid cells at each end</td>
+</tr>
+<tr>
+<td><a href="#orbit">Orbit</a></td>
+<td>Ball circulates among golden bricks along a path of more than two legs</td>
+<td>Unwinnable</td>
+<td>Faces and corners of golden bricks and borders that return the ball to its first state</td>
+</tr>
+<tr>
+<td><a href="#skim">Skim</a></td>
+<td>Ball skims under the top border and never returns</td>
+<td>Unwinnable</td>
+<td>Any level</td>
+</tr>
+<tr>
+<td><a href="#scramble">Scramble</a></td>
+<td>Playfield freezes while the game plays on underneath</td>
+<td>Unplayable</td>
+<td>Bat on the right, bottom-left corner clear</td>
+</tr>
+<tr>
+<td><a href="#missed-clear">Missed clear</a></td>
+<td>No destructible bricks are left, but the level does not end</td>
+<td>Level held open</td>
+<td>A ball that hits golden bricks after the last destructible brick breaks</td>
+</tr>
+<tr>
+<td><a href="#dud">Dud</a></td>
+<td>A bomb in another bomb's blast shatters and never detonates</td>
+<td>Lost prize</td>
+<td>Two bombs next to each other</td>
+</tr>
+<tr>
+<td><a href="#orb-drift">Orb drift</a></td>
+<td>Orb wears other inhabitants' sprites while it returns the ball</td>
+<td>Cosmetic</td>
+<td>An orb that catches the ball</td>
+</tr>
+<tr>
+<td><a href="#speck">Speck</a></td>
+<td>A stray speck sits inside the visor's sprite</td>
+<td>Cosmetic</td>
+<td>Any key the ROM accepts during the front end</td>
+</tr>
+<tr>
+<td><a href="#fire-gate">Fire gate</a></td>
+<td>The missile launch ignores the fire key while the bat is frozen or stung, or moves under inertia</td>
+<td>Missile ignored or misfired</td>
+<td>A missile bat armed while the bat is frozen or stung, or moves under inertia</td>
+</tr>
+<tr>
+<td><a href="#ufo">UFO</a></td>
+<td>The UFO never appears</td>
+<td>None in play</td>
+<td>Any level</td>
+</tr>
+</tbody>
+</table>
+
+<h2 class="ref-section" id="reflection-reset">How the ball gets stuck</h2>
+
+<div class="paragraph">
+Wedge, shuttle, orbit and skim trap the ball in a path it cannot leave. The ball
+moves in sub-pixel steps. Each axis moves one pixel only when its own count
+#R$A4F6(fills up). Every bounce #R$A2D8(empties both counts) and leaves the
+ball where it is. A ball that bounces before its slow axis moves a pixel
+therefore travels on one axis only.
+</div>
+
+<div class="paragraph">
+A bounce depends only on the ball's heading and on what it hits. A ball that comes
+back to a place at a heading it had there before repeats its path for good. The
+#R$8C26(anti-stuck nudge) turns ball A around after 30 frames within 16 pixels of where it was on both axes.
+The next bounce undoes the turn, because a heading and its opposite
+#R$A424(leave a surface at the same heading).
+</div>
+
+<div class="paragraph">
+A trapped ball never returns to the bat. Destructible bricks off its path stay out
+of reach. The level cannot clear while any remain. With none left, the level
+<a href="#missed-clear">ends late</a>.
+</div>
+
+<hgroup class="ref-head">
+<h2 class="ref-section" id="wedge">Wedge</h2>
+<p class="ref-deck">The ball sticks to a golden brick.</p>
+</hgroup>
+
+<video src="videos/defects/wedge.mp4" width="512" height="384" controls playsinline preload="metadata"></video>
+
+<div class="paragraph">
+The ball meets the face of a golden brick almost along the face. It bounces off
+the face each time it probes ahead, and never moves away from it.
+</div>
+
+<div class="paragraph">
+Each bounce #R$A99B(scores). Only a #R$A777(bat bounce) resets the combo. The
+score climbs without end.
+</div>
+
+<hgroup class="ref-head">
+<h2 class="ref-section" id="shuttle">Shuttle</h2>
+<p class="ref-deck">The ball runs back and forth between two golden bricks.</p>
+</hgroup>
+
+<video src="videos/defects/shuttle.mp4" width="512" height="384" controls playsinline preload="metadata"></video>
+
+<div class="paragraph">
+A diagonal ball meets an inside corner of golden bricks, where the cell beside it
+and the cell ahead of it both block. A corner sends a diagonal ball
+#R$A674(straight back along its line). With such a corner at each end, the ball runs between
+them for good.
+</div>
+
+<hgroup class="ref-head">
+<h2 class="ref-section" id="orbit">Orbit</h2>
+<p class="ref-deck">The ball circles among golden bricks.</p>
+</hgroup>
+
+<video src="videos/defects/orbit.mp4" width="512" height="384" controls playsinline preload="metadata"></video>
+
+<div class="paragraph">
+The ball bounces among golden bricks and borders along a path of three or more
+legs. It comes back to where it started at the heading it started with. It then
+repeats the path for good. Nothing on the path ever changes.
+</div>
+
+<hgroup class="ref-head">
+<h2 class="ref-section" id="skim">Skim</h2>
+<p class="ref-deck">The ball never leaves the top border.</p>
+</hgroup>
+
+<video src="videos/defects/skim.mp4" width="512" height="384" controls playsinline preload="metadata"></video>
+
+<div class="paragraph">
+The ball runs along just under the top border at a heading close to the
+horizontal. Each time it probes ahead, it also tests the border cell above it,
+finds it solid and #R$A343(bounces). The bounce is silent and #R$A299(scores nothing).
+</div>
+
+<hgroup class="ref-head">
+<h2 class="ref-section" id="scramble">Scramble</h2>
+<p class="ref-deck">The playfield freezes.</p>
+</hgroup>
+
+<video src="videos/defects/scramble.mp4" width="512" height="384" controls playsinline preload="metadata"></video>
+
+<div class="paragraph">
+Play with the bat on the right, so the wall runs down the left edge. Clear the
+bricks from the bottom-left corner and let the ball reach the corner cell.
+</div>
+
+<div class="paragraph">
+The game redraws only the cells whose #R$FB00(dirty counter) is set. A
+terminator ends the scan. The terminator sits in the bottom-left corner cell. That
+cell never changes in normal play. A ball #R$BAF2(drawn there) overwrites the
+terminator.
+</div>
+
+<div class="paragraph">
+Without the terminator, the #R$BB38(redraw) runs past the end of the dirty counters. It sprays
+graphics over memory. Bands of the screen change color. The redraw never draws
+parts of the playfield again. Play and the score go on underneath. The damage lasts
+until the #R$8BD0(next level starts).
+</div>
+
+<hgroup class="ref-head">
+<h2 class="ref-section" id="missed-clear">Missed clear</h2>
+<p class="ref-deck">Every destructible brick is gone, but the level plays on.</p>
+</hgroup>
+
+<video src="videos/defects/missed-clear.mp4" width="512" height="384" controls playsinline preload="metadata"></video>
+
+<div class="paragraph">
+A level ends when every brick slot is empty or holds a golden brick at rest. The #R$AF20(check for this)
+skips a golden brick only when it shows its plain face. A golden brick flashes when the ball
+hits it. It also #R$B0BF(twinkles at random). In either case the check takes it for
+a brick still to break.
+</div>
+
+<div class="paragraph">
+The level ends at the first check that finds every golden brick at rest. A ball
+that bounces among golden bricks therefore pushes the end back, for as long as it
+stays there.
+</div>
+
+<hgroup class="ref-head">
+<h2 class="ref-section" id="dud">Dud</h2>
+<p class="ref-deck">A bomb in the blast never goes off.</p>
+</hgroup>
+
+<div class="paragraph">
+<div class="inset">#UDGARRAY2,7,3,tindex=1,alpha=0($DBE8,$46;$DBF0,$44;$DBD8,$46;$DC00,$44;$DBE8,$46;$DBF0,$44;$DBD8,$46;$DC00,$44)(two_bombs)</div>
+When two bombs lie next to each other and the ball takes one, its #R$B21D(blast) clears
+the eight bricks around it. The other bomb shatters like a plain brick and never
+detonates.
+</div>
+
+<hgroup class="ref-head">
+<h2 class="ref-section" id="orb-drift">Orb drift</h2>
+<p class="ref-deck">The orb wears the wrong sprites.</p>
+</hgroup>
+
+<div class="paragraph">
+An #R$D05B(orb) that catches the ball chews it, then spits it out, and the ball
+slides back toward the bat. On the way its animation runs past its last frame and never stops. The orb
+then wears frames of the comet and then of the hive.
+</div>
+
+<div class="paragraph">
+The drift ends when the ball reaches the bat's losing edge. There the player
+#R$9FFF(loses the ball).
+</div>
+
+<hgroup class="ref-head">
+<h2 class="ref-section" id="speck">Speck</h2>
+<p class="ref-deck">A stray speck sits in the visor's sprite.</p>
+</hgroup>
+
+<div class="paragraph">
+A key pressed while the front end is on screen leaves a speck in the visor's
+first frame. It stays until the player resets the machine.
+</div>
+
+<div class="paragraph">
+The ROM stores the last key it accepts in LAST-K. The game keeps a byte of the
+#R$5C00(visor's sprite) at the same address. It never copies the sprite in
+again.
+</div>
+
+<hgroup class="ref-head">
+<h2 class="ref-section" id="fire-gate">Fire gate</h2>
+<p class="ref-deck">The fire test reads the wrong byte.</p>
+</hgroup>
+
+<div class="paragraph">
+The #R$9A8D(missile launch) tests fire in a value it does not choose itself.
+Under direct control, and under the inertia option while the bat stands still,
+that value is the #R$BC23(controls).
+</div>
+
+<div class="paragraph">
+While the bat moves under the inertia option, it is a step from the
+#R$9B67(inertia speed ramp). During the bat freeze, it is the
+#R$5B92(freeze timer). Neither ever holds the fire bit, so the missile does not
+launch.
+</div>
+
+<div class="paragraph">
+During the bee's sting, it is whatever the
+#R$9CB3(object manager) used last. The launch then follows that value, not the fire
+key.
+</div>
+
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E521,,2;$E520,,2;$E531,,2;$E530,,2)(*ufo_1)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E541,,2;$E540,,2;$E551,,2;$E550,,2)(*ufo_2)
+
+<hgroup class="ref-head">
+<h2 class="ref-section" id="ufo">UFO</h2>
+<p class="ref-deck">The UFO never spawns.</p>
+</hgroup>
+
+<div class="paragraph">
+<div class="inset">#FRAMES(ufo_1,8;ufo_2,8)(ufo)</div>
+The game carries a whole UFO: two sprite frames, an animation and a
+#R$CDE8(behavior handler). Nothing spawns it, so it never appears in play.
+</div>
