@@ -2,6 +2,8 @@
 
 This project reverse engineers [Krakout](https://spectrumcomputing.co.uk/entry/2768/ZX-Spectrum/Krakout), a game for the ZX Spectrum 48K published by Gremlin Graphics in 1987, from the original tape image using [SkoolKit](https://skoolkit.ca).
 
+The annotated disassembly is available at [morozov.github.io/krakout-disasm](https://morozov.github.io/krakout-disasm/).
+
 <p align="center">
     <img src="resources/loading-screen.png" width="512" height="384" alt="The Krakout loading screen">
 </p>
