@@ -5318,7 +5318,7 @@ B $DB58,8 #HTML(#UDG$DB58,71,2,tindex=1,alpha=0(tile_6b))
 N $DB60 A revealed prize glyph is a 2×2 tile block. Some glyphs share a bottom-row tile with another prize's glyph. Prize effects are listed at the #R$B0DF(prize handler).
 N $DB60 Safety net prize glyph: letter S. #UDGTABLE { #UDGARRAY2,7,3,tindex=1,alpha=0($DB60,$46;$DB68,$44;$DB70,$46;$DB78,$44)(tile_prize_safety_net) } TABLE#
 B $DB60,32,8 Safety net prize glyph
-N $DB80 Glyphs of the golden brick's #R$AC31(gleam), a sequence that nothing plays. The composed animations are pictured under #LINK(Graphics#bricks)(Bricks).
+N $DB80 Glyphs of the golden brick's #R$AC31(gleam), a sequence that nothing plays. The animation is pictured under #LINK(UnusedResources#golden-gleam)(Golden-brick gleam).
 B $DB80,72,8 Break-sequence glyphs
 N $DBC8 Glue prize glyph: letter G. Its bottom-right tile is safety net's, and the block's last tile is unused. #UDGTABLE { #UDGARRAY2,7,3,tindex=1,alpha=0($DBC8,$46;$DBD0,$44;$DBD8,$46;$DB78,$44)(tile_prize_glue) } TABLE#
 B $DBC8,32,8 Glue prize glyph

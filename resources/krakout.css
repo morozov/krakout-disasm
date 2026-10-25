@@ -754,7 +754,8 @@ body.GameIndex footer { margin-top: 16px; }
   .page-content :where(table:not(.disassembly)) { display: block; overflow-x: auto; }
 }
 
-body:is(.Graphics, .Sound, .Levels, .krakout-ii, .Defects, .Glossary, .Pokes, .GameIndex) { --measure: 800px; }
+body:is(.Graphics, .Sound, .Levels, .krakout-ii, .Defects, .UnusedResources, .Glossary, .Pokes, .GameIndex) { --measure: 800px; }
+body.UnusedResources { --measure: 900px; }
 
 /* A link up to a reading page names a section in English, so it keeps the
    reading face. */

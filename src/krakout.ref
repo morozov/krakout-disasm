@@ -1,5 +1,5 @@
 [Config]
-RefFiles=graphics.ref;sound.ref;defects.ref;levels.ref;krakout-ii.ref;glossary.ref;pokes.ref
+RefFiles=graphics.ref;sound.ref;defects.ref;unused.ref;levels.ref;krakout-ii.ref;glossary.ref;pokes.ref
 GameDir=krakout
 
 [ImageWriter]
@@ -58,6 +58,7 @@ Sound
 Levels
 krakout-ii
 Defects
+UnusedResources
 
 [Index:Reference:Reference]
 Glossary
@@ -86,6 +87,7 @@ krakout-ii=Krakout <img class="brand-ii" src="images/krakout-ii-icon.png" alt="I
 Glossary=Glossary
 Pokes=Pokes
 Defects=Known defects
+UnusedResources=Unused resources
 
 [Paths]
 CodeFiles={address:04X}.html
@@ -104,6 +106,7 @@ krakout-ii=Krakout <img class="brand-ii" src="images/krakout-ii-icon.png" alt="I
 Glossary=Glossary of terms
 Pokes=Pokes
 Defects=Known defects
+UnusedResources=Unused resources
 
 ; A [Page:...] page needs a line here as well as in [PageHeaders] and [Links],
 ; or it is titled with its page ID.
@@ -116,6 +119,7 @@ krakout-ii=Krakout II
 Glossary=Glossary of terms
 Pokes=Pokes
 Defects=Known defects
+UnusedResources=Unused resources
 Asm-b={entry[title]}
 Asm-c={entry[title]}
 Asm-g={entry[title]}

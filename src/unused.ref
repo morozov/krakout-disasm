@@ -1,0 +1,49 @@
+[Page:UnusedResources]
+PageContent=#INCLUDE(UnusedResourcesContent)
+
+[UnusedResourcesContent]
+<div class="paragraph">
+The game includes graphics and animations that its level designs and play logic
+leave unused.
+</div>
+
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E521,,2;$E520,,2;$E531,,2;$E530,,2)(*ufo_1)
+#UDGARRAY2,7,3,2,tindex=1,alpha=0($E541,,2;$E540,,2;$E551,,2;$E550,,2)(*ufo_2)
+
+<hgroup class="ref-head">
+<h2 class="ref-section" id="ufo">UFO</h2>
+<p class="ref-deck">The UFO never spawns.</p>
+</hgroup>
+
+<div class="paragraph">
+<div class="inset">#FRAMES(ufo_1,8;ufo_2,8)(ufo)</div>
+The game carries a whole UFO: two sprite frames, an animation and a
+#R$CDE8(behavior handler). Nothing spawns it, so it never appears in play.
+</div>
+
+<hgroup class="ref-head">
+<h2 class="ref-section" id="angry-face">Angry-face brick</h2>
+<p class="ref-deck">The level designs omit the angry-face brick.</p>
+</hgroup>
+
+<div class="paragraph">
+#UDGARRAY14,7,3,tindex=1,alpha=0($DD98,$41;$DDA0,$41;$DD98,$42;$DDA0,$42;$DD98,$43;$DDA0,$43;$DD98,$44;$DDA0,$44;$DD98,$45;$DDA0,$45;$DD98,$46;$DDA0,$46;$DD98,$47;$DDA0,$47;$DDA8,$41;$DCA0,$41;$DDA8,$42;$DCA0,$42;$DDA8,$43;$DCA0,$43;$DDA8,$44;$DCA0,$44;$DDA8,$45;$DCA0,$45;$DDA8,$46;$DCA0,$46;$DDA8,$47;$DCA0,$47)(angry_face_bricks)
+</div>
+
+<div class="paragraph">
+Its #R$921A(design) and #R$9191(colors) are defined, but the
+#R$6754(level layouts) never place it.
+</div>
+
+#UDGARRAY2,69,3,tindex=1,alpha=0($DB80;$DB88;$DAD8;$DAE0)(*gg0)#UDGARRAY2,69,3,tindex=1,alpha=0($DB90;$DB98;$DAD8;$DAE0)(*gg1)#UDGARRAY2,69,3,tindex=1,alpha=0($DBA0;$DAD0;$DAD8;$DAE0)(*gg2)#UDGARRAY2,69,3,tindex=1,alpha=0($DBA8;$DAD0;$DBB0;$DAE0)(*gg3)#UDGARRAY2,69,3,tindex=1,alpha=0($DBB8;$DAD0;$DBC0;$DAE0)(*gg4)#UDGARRAY2,69,3,tindex=1,alpha=0($DAC8;$DAD0;$DAD8;$DAE0)(*gg5)
+
+<hgroup class="ref-head">
+<h2 class="ref-section" id="golden-gleam">Golden-brick gleam</h2>
+<p class="ref-deck">The golden brick has a flash that never plays.</p>
+</hgroup>
+
+<div class="paragraph">
+<div class="inset">#FRAMES(gg0,6;gg1,6;gg2,6;gg3,6;gg4,6;gg5,6)(golden_gleam)</div>
+The #R$AC31(gleam sequence) is present in the #R$AB60(break-animation table),
+but no brick selects it. The #R$AB1B(durability classes) assign no tiles to it.
+</div>

@@ -78,12 +78,6 @@ playfield can freeze, or the ball can fall into a loop it cannot leave on its ow
 <td>Missile ignored or misfired</td>
 <td>A missile bat armed while the bat is frozen or stung, or moves under inertia</td>
 </tr>
-<tr>
-<td><a href="#ufo">UFO</a></td>
-<td>The UFO never appears</td>
-<td>None in play</td>
-<td>Any level</td>
-</tr>
 </tbody>
 </table>
 
@@ -280,18 +274,4 @@ launch.
 During the bee's sting, it is whatever the
 #R$9CB3(object manager) used last. The launch then follows that value, not the fire
 key.
-</div>
-
-#UDGARRAY2,7,3,2,tindex=1,alpha=0($E521,,2;$E520,,2;$E531,,2;$E530,,2)(*ufo_1)
-#UDGARRAY2,7,3,2,tindex=1,alpha=0($E541,,2;$E540,,2;$E551,,2;$E550,,2)(*ufo_2)
-
-<hgroup class="ref-head">
-<h2 class="ref-section" id="ufo">UFO</h2>
-<p class="ref-deck">The UFO never spawns.</p>
-</hgroup>
-
-<div class="paragraph">
-<div class="inset">#FRAMES(ufo_1,8;ufo_2,8)(ufo)</div>
-The game carries a whole UFO: two sprite frames, an animation and a
-#R$CDE8(behavior handler). Nothing spawns it, so it never appears in play.
 </div>

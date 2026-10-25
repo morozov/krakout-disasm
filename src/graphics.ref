@@ -103,9 +103,7 @@ renders each one in every ink it takes.
 
 #UDGTABLE(default)
 { =h Design | =h Brick | =h Slot codes | =h Class | =h Colors (inks used in levels) }
-{ solid | #UDGARRAY2,71,3,tindex=1,alpha=0($DD80;$DD88;$DD90;$DE60)(brick_solid_lo) | $43–$49 | 1 | white }
-{ solid | #UDGARRAY2,69,3,tindex=1,alpha=0($DDB0;$DDB8;$DDC0;$DE60)(brick_solid) | $4A–$50 | 1 | blue, red, magenta, green, cyan, yellow, white }
-{ solid <b>prize</b> | #UDGARRAY2,69,3,tindex=1,alpha=0($DB20;$DE50;$DE58;$DE60)(brick_prize) | $04–$42 | 7–15 | blue, red, magenta, green, cyan, yellow, white }
+{ solid | #UDGARRAY2,69,3,tindex=1,alpha=0($DDB0;$DDB8;$DDC0;$DE60)(brick_solid) | $04–$50 | 1, 7–15 | blue, red, magenta, green, cyan, yellow, white }
 { window | #UDGARRAY2,65,3,tindex=1,alpha=0($DDC8;$DDD0;$DDD8;$DDE0)(brick_window) | $51–$57 | 1 | blue, red, magenta, green, cyan, yellow, white }
 { rounded | #UDGARRAY2,66,3,tindex=1,alpha=0($DDE8;$DDF0;$DDF8;$DE00)(brick_rounded) | $58–$5E | 1 | red, magenta, green, cyan, yellow, white }
 { ornate | #UDGARRAY2,66,3,tindex=1,alpha=0($DE08;$DE10;$DE18;$DE20)(brick_ornate) | $5F–$65 | 1 | red, magenta, green, cyan, yellow, white }
@@ -132,15 +130,8 @@ Golden-brick twinkle – the golden brick's #R$B0BF(idle flash).
 </div>
 
 <div class="paragraph">
-Two more designs sit in the #R$921A(tile-glyph groups) and the #R$9191(brick attributes): an angry-face brick and a third solid brick.
-</div>
-
-#UDGARRAY2,69,3,tindex=1,alpha=0($DB80;$DB88;$DAD8;$DAE0)(*gg0)#UDGARRAY2,69,3,tindex=1,alpha=0($DB90;$DB98;$DAD8;$DAE0)(*gg1)#UDGARRAY2,69,3,tindex=1,alpha=0($DBA0;$DAD0;$DAD8;$DAE0)(*gg2)#UDGARRAY2,69,3,tindex=1,alpha=0($DBA8;$DAD0;$DBB0;$DAE0)(*gg3)#UDGARRAY2,69,3,tindex=1,alpha=0($DBB8;$DAD0;$DBC0;$DAE0)(*gg4)#UDGARRAY2,69,3,tindex=1,alpha=0($DAC8;$DAD0;$DAD8;$DAE0)(*gg5)
-
-<div class="paragraph">
-<div class="inset">#FRAMES(gg0,6;gg1,6;gg2,6;gg3,6;gg4,6;gg5,6)(golden_gleam)</div>
-Golden-brick gleam – a third golden-brick flash beside the twinkle and the hit flash.
-It is a #R$AC31(sequence in the break-animation table) that nothing plays.
+The omitted angry-face brick and golden-brick gleam are shown under
+#LINK(UnusedResources)(Unused resources).
 </div>
 
 <h3 class="ref-subsection" id="prizes">Prizes</h3>
