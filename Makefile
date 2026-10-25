@@ -67,18 +67,25 @@ $(PAGE_FRAME) &: tools/build_frame.py src/graphics.ref $(BIN)
 	python3 tools/build_frame.py $(BIN) src/graphics.ref $(SITE_RENDERS)
 
 FONT = $(SITE_RENDERS)/krakout-font.ttf $(SITE_RENDERS)/krakout-font.woff2
+DOUBLE_FONT = $(SITE_RENDERS)/krakout-font-double.ttf $(SITE_RENDERS)/krakout-font-double.woff2
 
 # --first and --last bound the game's glyphs, which run from code $20 at $8FB9.
 # Lower codes would read other entries, and code $5B reads the brick attribute
 # table at $9191.
-$(FONT) &: $(BIN)
+$(FONT) &: $(BIN) $(SITE_HOME)/render/font.py
 	@mkdir -p $(SITE_RENDERS)
 	$(SITE_HOME)/render/font.py $(BIN) --org $(ORG) --base 0x8EB9 \
 	    --first 0x20 --last 0x5A --family Krakout \
 	    --id 'Krakout;Gremlin Graphics 1987;extracted' --out $(SITE_RENDERS)/krakout-font
 
+$(DOUBLE_FONT) &: $(BIN) $(SITE_HOME)/render/font.py
+	@mkdir -p $(SITE_RENDERS)
+	$(SITE_HOME)/render/font.py $(BIN) --org $(ORG) --base 0x8EB9 \
+	    --first 0x20 --last 0x5A --family 'Krakout Double' --double-height \
+	    --id 'Krakout Double;Gremlin Graphics 1987;extracted' --out $(SITE_RENDERS)/krakout-font-double
+
 # The rendered site files, which the framework's stamp rule does not list.
-$(HTML_DIR)/.stamp: $(FONT) $(PAGE_FRAME) $(LEVEL_RENDERS) $(KRAKOUT_II_LEVEL_RENDERS) \
+$(HTML_DIR)/.stamp: $(FONT) $(DOUBLE_FONT) $(PAGE_FRAME) $(LEVEL_RENDERS) $(KRAKOUT_II_LEVEL_RENDERS) \
              $(KRAKOUT_II_ICON) $(KRAKOUT_II_SCREEN)
 
 ifdef SKILL_HOME
