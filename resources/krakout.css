@@ -1,3 +1,5 @@
+.github-fork-ribbon:before { background-color: #e06000; }
+
 /* Loads after skoolkit.css and theme.css. Ink marks only links, entry types
    and the game's art; everything else stays neutral. */
 

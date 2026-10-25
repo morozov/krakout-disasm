@@ -9,12 +9,23 @@ PNGAlpha=0
 Game=Krakout
 DisassemblyTableNumCols=4
 LinkOperands=CALL,DEFW,DJNZ,JP,JR,LD
-StyleSheet=skoolkit.css;theme.css;krakout.css
+StyleSheet=skoolkit.css;theme.css;github-fork-ribbon.css;krakout.css
 ; Hex, to match the hex page filenames CodeFiles sets below.
 AddressAnchor={address#IF({base}==16)(:04x)}
 Copyright=(c) 1987 Gremlin Graphics.
 Font=krakout-font.woff2;krakout-font.ttf
 Logo=#UDGARRAY14,7,2,tindex=1,alpha=0($BEF9,$44;$BF01,$44;$BF09,$44;$BF11,$44;$BF19,$44;$BF21,$44;$BF29,$44;$BF31,$44;$BF39,$47;$BF41,$47;$BF49,$46;$BF51,$46;$BF59,$46;$BF61,$46;$BF69,$44;$BF71,$44;$BF79,$44;$BF81,$44;$BF89,$44;$BF91,$44;$BF99,$44;$BFA1,$47;$BFA9,$45;$BFB1,$45;$BFB9,$46;$BFC1,$46;$BFC9,$46;$BFD1,$46;$BFD9,$44;$BFE1,$44;$BFE9,$44;$BFF1,$44;$BFF9,$44;$C001,$44;$C009,$44;$C011,$47;$C019,$45;$C021,$45;$C029,$46;$C031,$46;$C039,$46;$C041,$46)(logo|Krakout home)
+
+[Template:footer]
+<footer>
+<div class="release">{Game[Release]}</div>
+<div class="copyright">{Game[Copyright]}</div>
+<div class="created">{Game[Created]}</div>
+<# if(Game[Download]) #>
+<div class="download">{Game[Download]}</div>
+<# endif #>
+</footer>
+<a class="github-fork-ribbon fixed" href="https://github.com/morozov/krakout-disasm" data-ribbon="Fork me on GitHub" title="Fork me on GitHub" target="_blank" rel="noopener">Fork me on GitHub</a>
 
 [Resources]
 page-frame.png=images
