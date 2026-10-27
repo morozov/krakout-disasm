@@ -74,9 +74,9 @@ playfield can freeze, or the ball can fall into a loop it cannot leave on its ow
 </tr>
 <tr>
 <td><a href="#fire-gate">Fire gate</a></td>
-<td>The missile launch ignores the fire key while the bat is frozen or stung, or moves under inertia</td>
+<td>The missile launch ignores the fire key while the bat is stunned or stung, or moves under inertia</td>
 <td>Missile ignored or misfired</td>
-<td>A missile bat armed while the bat is frozen or stung, or moves under inertia</td>
+<td>A missile bat armed while the bat is stunned or stung, or moves under inertia</td>
 </tr>
 </tbody>
 </table>
@@ -265,8 +265,8 @@ that value is the #R$BC23(controls).
 
 <div class="paragraph">
 While the bat moves under the inertia option, it is a step from the
-#R$9B67(inertia speed ramp). During the bat freeze, it is the
-#R$5B92(freeze timer). Neither ever holds the fire bit, so the missile does not
+#R$9B67(inertia speed ramp). During bowling-ball stun, it is the
+#R$5B92(bowling-ball stun timer). Neither ever holds the fire bit, so the missile does not
 launch.
 </div>
 

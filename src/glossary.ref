@@ -97,6 +97,8 @@ The dirty counters, one per screen cell.
 #TABLE(default)
 { =h Write | =h Not }
 { bat | paddle }
+{ bowling-ball stun | bat stun, bat freeze }
+{ bee sting | bat sting, sting freeze }
 { H-rotor | rotor }
 { prize | powerup }
 { tune, title tune | jingle, melody, front-end tune, attract tune, attract jingle, in-game tune }
