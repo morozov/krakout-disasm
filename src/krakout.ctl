@@ -4197,8 +4197,8 @@ R $C73D I:IY address of the object's 16-byte record
   $C764 Clear the animation timer and set the state to spawn, the state the spawn animation runs from.
   $C76C
 @ $C76D label=spawn_wheel_swarm
-c $C76D Fill the free inhabitant slots with wheels
-D $C76D When the #R$5B95(wheel swarm trigger) is set, clears it and fills every free #R$CB3C(inhabitant record) with a wheel. Each new wheel sits 16 pixels below the last, under the wheel that set the trigger.
+c $C76D Spawn a line of wheels
+D $C76D Adds wheels directly below the wheel that starts the swarm. They form a close vertical line.
 N $C76D The new wheels are ordinary inhabitants, run by the #R$D1B9(wheel handler).
   $C76D Do nothing unless the wheel swarm trigger is set.
   $C772 Consume the trigger (one-shot).
@@ -4206,7 +4206,7 @@ N $C76D The new wheels are ordinary inhabitants, run by the #R$D1B9(wheel handle
   $C78E
   $C78F Point IX at that source object's sprite record to read its position.
   $C79B Reset the vertical stack offset to 0.
-N $C79F Fill every free inhabitant slot that is left with a new wheel, each stacked 16 pixels below the last.
+N $C79F Fill every free inhabitant slot that is left with a new wheel, each directly below the last.
   $C79F Step to the next inhabitant record; stop after the last inhabitant; skip occupied records.
   $C7A5 Walk on to the next record.
   $C7B5 Claim the free record as a wheel.
@@ -4769,7 +4769,7 @@ R $CE27 I:C the inhabitant's pool-slot index
   $CE5E
 @ $CE5F label=update_bowling_ball
 c $CE5F Bowling-ball behavior handler
-D $CE5F The bowling ball charges the bat, stuns it on contact and self-destructs. A ball kill awards 200 points.
+D $CE5F The bowling ball rolls toward the bat, stuns it on contact and self-destructs. A ball kill awards 200 points.
 N $CE5F Animation: the three ball sprites roll forward, each shown 4 game frames. Movement: it #R$C91C(steers toward the bat), #R$C7E8(avoids walls) and #R$CA54(advances). Test order: the #R$CCD2(ball kill) comes first. Then the #R$A717(overlap test) checks the bat alone. On a hit the bowling ball dies and triggers #R$5B91(bowling-ball stun), with a timed release in the #R$9988(bat mover). Otherwise the #R$CD16(sweep) takes it in a plain kill.
 R $CE5F I:IX the inhabitant's #R$8F68(sprite record)
 R $CE5F I:IY the inhabitant's #R$CB3C(logic record)
@@ -4777,7 +4777,7 @@ R $CE5F I:C the inhabitant's pool-slot index
   $CE5F Run the reaction-state step; carry skips the rest during a spawn or death animation.
   $CE63 Animate from the bowling-ball frame table (3 sprites, forward roll). Wrap the animation frame at the table's end.
 @ $CE74 label=bowling_steer
-  $CE74 Home: turn the heading toward the bat, so the ball charges it.
+  $CE74 Home: turn the heading toward the bat, so the ball rolls toward it.
   $CE79 Steer clear of the walls.
   $CE7C Advance one step and publish the heading code.
   $CE7F Ball kill: it dies for 200 points, banked into the pending score.
@@ -4792,7 +4792,7 @@ R $CE5F I:C the inhabitant's pool-slot index
   $CEB2
 @ $CEB3 label=update_hive
 c $CEB3 Hive behavior handler
-D $CEB3 The hive wanders sideways, homes on the bat's row and spawns bees above itself.
+D $CEB3 The hive wanders sideways, follows the bat up and down and spawns bees above itself.
 R $CEB3 I:IX the hive's #R$8F68(sprite record), with its screen X,Y
 R $CEB3 I:IY the hive's #R$CB3C(logic record)
 R $CEB3 I:C the hive's pool-slot index, passed to the overlap and offscreen helpers
@@ -4807,15 +4807,15 @@ N $CED3 In the idle state the hive wanders and homes on the bat's row.
   $CED3 Idle animation
   $CED9 Wrap the idle loop.
 @ $CEE4 label=hive_move
-N $CEE4 Pick a #R$C8C2(horizontal wander heading), right or left, then home vertically on the bat's row. The bat's row is the Y byte of its sprite record. While the hive runs right or left, its row is compared against the bat's. The comparison tilts the heading one step up or down. The horizontal run becomes a diagonal that closes on the bat's row.
+N $CEE4 Pick a #R$C8C2(horizontal wander heading), right or left, then home vertically on the bat's row. The bat's row is the Y byte of its sprite record. While the hive moves right or left, its row is compared against the bat's. The comparison tilts the heading one step up or down. The horizontal run becomes a diagonal that closes on the bat's row.
   $CEE4 Constrain the wander to a horizontal heading.
   $CEE9 The bat's row is the Y byte of its sprite record.
   $CEEC Only steer while the heading is horizontal.
-  $CEF3 Run to the right: tilt the heading one step up when the bat is level with or above the hive.
+  $CEF3 Move to the right: tilt the heading one step up when the bat is level with or above the hive.
 @ $CEFE label=hive_nudge_a
   $CEFE The bat sits below, so tilt the other way.
 @ $CF03 label=hive_steer_left
-  $CF03 Run to the left: tilt the heading one step up when the bat is level with or above the hive.
+  $CF03 Move to the left: tilt the heading one step up when the bat is level with or above the hive.
 @ $CF12 label=hive_nudge_b
   $CF12 The bat sits below, so tilt the other way.
 @ $CF15 label=hive_clamp_top
@@ -4883,14 +4883,14 @@ N $CFC6 Home on the bat's losing edge. The heading is rightward when the #R$8E9E
   $CFEA,4 Reached the bat?
 @ $CFF0 label=bee_sting
   $CFF0 Yes: restart the animation and die.
-  $CFF8,5 Raise the sting flag: the player loses control of the bat.
+  $CFF8,5 Raise the sting flag: bat movement stops.
 @ $CFFE label=bee_sweep
 N $CFFE The sweep's window sits a pixel the other way from the #R$A717(bat test) above. A bee that arrives exactly 12 px below or right of the bat is killed against it, and no sting happens.
   $CFFE No sting: the sweep still takes it in a plain kill.
   $D003,8 Restart the animation and die.
 @ $D00C label=update_capsule
 c $D00C Capsule behavior handler
-D $D00C The capsule wanders until it hits a brick, which takes a hit as the capsule dies. A ball hit destroys the capsule for 50 points.
+D $D00C The capsule moves around until it hits a brick, which takes a hit as the capsule dies. A ball hit destroys the capsule for 50 points.
 N $D00C The handler runs the #R$CBFE(reaction state machine) first, then animates and tests for a brick strike. A hit kills it. Otherwise it wanders freely, avoids walls, moves, and runs the offscreen, ball-kill and sweep tests.
 R $D00C I:IX the capsule's #R$8F68(sprite record)
 R $D00C I:IY the capsule's #R$CB3C(logic record), read for its heading, animation frame and state
@@ -4914,7 +4914,7 @@ N $D039 No brick: #R$C8C2(wander in any direction), #R$C7E8(avoid walls), #R$CA5
   $D052,8 On a hit, restart the animation and die.
 @ $D05B label=update_orb
 c $D05B Orb (ball-capturer) behavior handler
-D $D05B The orb hunts the ball, catches it, chews it and spits it past the bat, so the player loses the ball. If its hunt expires, it becomes a capsule.
+D $D05B The orb hunts the ball, catches it, chews it and spits it past the bat and out of play. If its hunt expires, it becomes a capsule.
 N $D05B A capture of the ball scores 500 points. An orb that catches nothing within 250 frames turns into a #R$D00C(capsule).
 N $D05B The orb homes on ball A and captures it. In its default state it chases ball A. When it #R$A717(overlaps) ball A, it chews the ball for 110 frames, then spits it back toward the bat.
 N $D05B Hunt, the default: it forces the #R$6240(hunt sprite) into the sprite record each frame, then steers. While the #R$5B0B(bat holds ball A), for a serve or a glue catch, the orb #R$C8C2(wanders on a random heading). In free flight it #R$C91C(homes on the ball).
@@ -4985,20 +4985,20 @@ N $D186 Its heading is set at spawn and changes only when a #R$C7E8(wall or bric
   $D1B8
 @ $D1B9 label=update_wheel
 c $D1B9 Wheel behavior handler
-D $D1B9 The wheel zig-zags toward the bat's side and bounces off walls and bricks. Only a ball hit destroys it, for 100 points.
-N $D1B9 It #R$C7E8(bounces off solid tiles). It remembers its last vertical heading (up or down) in its logic record. While its heading is horizontal (right or left) the travel counter in its record ticks once per pass. At the eighth count it toggles the saved vertical heading between up and down and steers that way.
-N $D1B9 Every horizontal run starts from zero. The spawn clears the counter, and so does the #R$C897(wall-avoid bias) each time a blocked probe sends the wheel horizontally toward the bat. A wheel blocked before its eighth count never flips. The counter does not tick while the wheel heads vertically. The result is a vertical zig-zag whose horizontal legs last at most eight passes.
+D $D1B9 The wheel sweeps up and down, with short sideways moves toward the bat between passes. Only a ball hit destroys it, for 100 points.
+N $D1B9 It #R$C7E8(turns at solid tiles). It remembers its last vertical heading (up or down) in its logic record. While its heading is horizontal (right or left) the travel counter in its record ticks once per pass. At the eighth count it tries the opposite vertical heading.
+N $D1B9 The spawn clears the counter, and #R$C897(wheel bias) clears it whenever an obstacle forces a horizontal heading toward the bat. An obstacle can block the attempted vertical turn, so the wheel continues sideways and starts another count. A horizontal obstruction can force an earlier vertical turn. The counter does not tick during vertical movement.
 N $D1B9 It #R$CA54(advances), and the #R$C977(far edge) takes it. It runs no sweep, so only a ball kill can destroy it.
   $D1B9 Run the shared reaction machine; skip the update while a spawn or death animation plays.
   $D1BD Advance its 8-frame animation.
   $D1C3 Loop the animation, and wrap the frame at the end of its table.
   $D1CE Is the heading vertical – straight up or straight down?
   $D1D8 If so, save it as the last vertical direction.
-  $D1DB Zig-zag only while the move is horizontal.
-  $D1E6 Is this the frame that flips the heading?
-  $D1F0 A saved downward heading flips to up.
-  $D1FA Anything else flips to down.
-  $D1FC Steer that way.
+  $D1DB Count horizontal travel toward the next attempted vertical turn.
+  $D1E6 Is the next vertical turn due?
+  $D1F0 A saved downward heading selects an upward turn.
+  $D1FA Otherwise, select a downward turn.
+  $D1FC Set the vertical heading for the obstacle check.
   $D1FF Bounce off walls, advance, and despawn off the far edge.
   $D209 A ball kill destroys it for 100 points; the result is ignored.
   $D20E
@@ -5040,30 +5040,30 @@ C $D2C6
   $D2FB Immune for the first four slide frames. The kill below runs from the fifth.
   $D305
 @ $D306 label=starburst_knock_kill
-  $D306 Past the immunity window a ball kill takes it for another 100 points on top of the catch, so one starburst can pay 200.
+  $D306 Past the immunity window a ball kill takes it for another 100 points on top of the initial hit, so one starburst can pay 200.
   $D30B
 @ $D30C label=starburst_wander
   $D30C Normal path: advance and wrap the 3-frame animation.
 @ $D31D label=starburst_wander_move
   $D31D Wander: re-pick the heading when the move timer expires, avoid walls, step, then despawn off the far edge.
-N $D32B While it wanders the starburst uses the 12-px overlap, narrower than the #R$CCD2(ball kill) that most handlers use. A ball has to come closer to catch it.
-  $D32B Test ball A against the starburst through the first and second overlap operands. An overlap takes the catch.
+N $D32B While it wanders the starburst uses the 12-px overlap, narrower than the #R$CCD2(ball kill) that most handlers use. A ball has to come closer to hit it.
+  $D32B Test ball A against the starburst through the first and second overlap operands. An overlap triggers the knock-back.
 @ $D33A label=starburst_test_ball2
-  $D33A No overlap with ball A: test ball B too, but only while the secondary object shows the #R$5CE0(ball sprite). An overlap takes the catch.
+  $D33A No overlap with ball A: test ball B too, but only while the secondary object shows the #R$5CE0(ball sprite). An overlap triggers the knock-back.
 @ $D35F label=starburst_sweep
   $D35F No overlap with a ball: the sweep kills it; otherwise it survives the frame.
   $D36C
-@ $D36D label=starburst_catch_ball1
-  $D36D Ball A catch: read ball A's heading code.
-@ $D372 label=starburst_catch_ball2
-  $D372 Ball B catch: read ball B's heading code.
-@ $D375 label=starburst_catch_apply
+@ $D36D label=starburst_hit_ball1
+  $D36D Ball A hit: read ball A's heading code.
+@ $D372 label=starburst_hit_ball2
+  $D372 Ball B hit: read ball B's heading code.
+@ $D375 label=starburst_hit_apply
   $D375 Enter the knock-back. Reset the animation, set the slide speed so each #R$CA54(step) moves it 4 px, and clear the immunity counter. Map the ball's heading code through the knock-back table, offset from the base of the heading range, to orient the heading. Stage the 100-point reward as this frame's pending points.
 @ $D38A isub=LD HL,knockback_table
   $D397
 @ $D398 label=hockey_mask
 c $D398 Hockey-mask behavior handler
-D $D398 Runs the hockey mask, which travels in a straight line that turns only at walls and bricks. While the player holds fire, the mask drops a #R$D44B(comet).
+D $D398 The hockey mask travels in a straight line and turns only at walls and bricks. Held fire makes it drop a #R$D44B(comet).
 R $D398 I:IX the mask's sprite record (#R$8F68)
 R $D398 I:IY the mask's logic record (#R$CB2C)
 R $D398 I:C the mask's pool-slot index
@@ -5091,7 +5091,7 @@ N $D3DF The fire read is level-triggered. Held fire therefore drops a fresh come
   $D44A
 @ $D44B label=update_comet
 c $D44B Comet behavior handler
-D $D44B The comet falls straight down until a wall or brick destroys it. It appears on later levels, or below a hockey mask while the player holds fire.
+D $D44B The comet falls straight down until a wall or brick destroys it. It appears on later levels, or a hockey mask drops it in response to held fire.
 N $D44B Animation is the #R$9508(3-frame table), wrapped at frame 3. A ball kill removes it for 50 points. When its #R$C9A2(step test) finds a wall or brick, it ends in the death reaction, which frees the slot. Like the wheel it runs no sweep, so the bat and the other objects do not stop it. A wall or a brick under it does, through that same step test.
   $D44B Reaction-state machine first; while a spawn or death animation plays it returns carry and skips the rest.
   $D44F Advance and wrap the 3-frame animation.
@@ -5104,8 +5104,8 @@ N $D44B Animation is the #R$9508(3-frame table), wrapped at frame 3. A ball kill
   $D47B
 @ $D47C label=update_warp_gate
 c $D47C Warp-gate behavior handler
-D $D47C The warp gate sits near the top of the bat's column. Contact with the bat advances the player by 1 to 4 levels.
-N $D47C A ball kill destroys it for 1000 points. An overlap with the bat raises the #R$8EA6(warp flag) and loads a random 2-to-5 #R$8EA7(warp countdown). The main loop then advances the level once per frame until the countdown clears. That carries the player forward 1 to 4 levels.
+D $D47C The warp gate opens above the bat. If the bat enters it, play advances by 1 to 4 levels.
+N $D47C A ball kill destroys it for 1000 points. An overlap with the bat raises the #R$8EA6(warp flag) and loads a random 2-to-5 #R$8EA7(warp countdown). The main loop then advances the level once per frame until the countdown clears. Play advances by 1 to 4 levels.
   $D47C Pin the X position to the bat's column; fix Y at a constant row.
   $D48F Reaction-state machine; while a spawn or death animation plays it returns carry and skips the rest.
   $D493 Head away from the bat's side: leftward when the bat is on the right.

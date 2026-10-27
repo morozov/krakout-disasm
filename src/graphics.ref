@@ -163,7 +163,7 @@ TABLE#
 <h2 class="ref-section" id="inhabitants">Inhabitants and the ball gem</h2>
 
 <div class="paragraph">
-The objects a level spawns during play, ordered by the level whose wave script first spawns each.
+The objects a level spawns during play, ordered by the first level that spawns each directly.
 </div>
 
 #UDGARRAY2,7,3,2,tindex=1,alpha=0($E1C1,,2;$E1C0,,2;$E1D1,,2;$E1D0,,2)(*death_burst_1)
@@ -267,19 +267,19 @@ The objects a level spawns during play, ordered by the level whose wave script f
 <div class="sprite-name">hive</div>
 <div class="sprite-stage"><div class="sprite-take">#FRAMES(hive_1,12;hive_2,12;hive_3,12)(hive)<div class="sprite-phase">idle</div></div><div class="sprite-take">#FRAMES(hive_spawn_burst_1,12;hive_spawn_burst_2,12;hive_spawn_burst_3,12)(hive_spawn_burst)<div class="sprite-phase">spawn burst</div></div></div>
 <div class="sprite-meta"><span>debuts at Level 3</span><span>run by its #R$CEB3(handler)</span></div>
-<div class="sprite-what">Wanders sideways and homes on your bat's row. Spawns bees.</div>
+<div class="sprite-what">Wanders sideways and follows the bat up and down. Spawns bees.</div>
 </div>
 <div class="sprite-card" id="obj-ball-gem">
 <div class="sprite-name">ball gem</div>
 <div class="sprite-stage">#FRAMES(gem_fly_1,4;gem_fly_2,4;gem_fly_3,4;gem_fly_4,4;gem_fly_3,4;gem_fly_2,4)(gem_fly)</div>
 <div class="sprite-meta"><span>debuts at Level 4</span><span>run by its #R$9E89(handler)</span></div>
-<div class="sprite-what">Wanders diagonally. Hit it with the ball to start two-ball play.</div>
+<div class="sprite-what">Wanders diagonally. A ball hit starts two-ball play.</div>
 </div>
 <div class="sprite-card" id="obj-bee">
 <div class="sprite-name">bee</div>
 <div class="sprite-stage">#FRAMES(bee_1,4;bee_2,4)(bee)</div>
 <div class="sprite-meta"><span>a level spawns it from Level 4</span><span>run by its #R$CFB1(handler)</span></div>
-<div class="sprite-what">Flies across at your bat and stings it. A sting freezes your control of the bat until the last ball in play is lost or the next level starts. A hive spawns it from Level 3.</div>
+<div class="sprite-what">Flies horizontally toward the bat and stings on contact. Bee sting prevents bat movement until the last ball in play is lost or the next level starts. A hive spawns it from Level 3.</div>
 </div>
 <div class="sprite-card" id="obj-diamond">
 <div class="sprite-name">diamond</div>
@@ -291,37 +291,37 @@ The objects a level spawns during play, ordered by the level whose wave script f
 <div class="sprite-name">bowling ball</div>
 <div class="sprite-stage">#FRAMES(bowling_ball_1,8;bowling_ball_2,8;bowling_ball_3,8)(bowling_ball)</div>
 <div class="sprite-meta"><span>debuts at Level 8</span><span>run by its #R$CE5F(handler)</span></div>
-<div class="sprite-what">Homes on your bat. On contact, it dies and inflicts #R$5B91(bowling-ball stun): you cannot move the bat for 15 main-loop passes.</div>
+<div class="sprite-what">Rolls toward the bat. On contact, it dies and inflicts #R$5B91(bowling-ball stun): the bat cannot move for 15 main-loop passes.</div>
 </div>
 <div class="sprite-card" id="obj-warp-gate">
 <div class="sprite-name">warp gate</div>
 <div class="sprite-stage">#FRAMES(warp_gate_1,8;warp_gate_2,8)(warp_gate)</div>
 <div class="sprite-meta"><span>debuts at Level 8</span><span>run by its #R$D47C(handler)</span></div>
-<div class="sprite-what">Sits near the top of your bat's column. Touch it with the bat to skip 1 to 4 levels. The ball destroys it.</div>
+<div class="sprite-what">Opens above the bat. If the bat enters it, play advances by 1 to 4 levels. The ball destroys it.</div>
 </div>
 <div class="sprite-card" id="obj-hockey-mask">
 <div class="sprite-name">hockey mask</div>
 <div class="sprite-stage"><div class="sprite-take">#FRAMES(hockey_mask_armed,8)(hockey_mask_armed)<div class="sprite-phase">armed with a comet</div></div><div class="sprite-take">#FRAMES(hockey_mask_unarmed,8)(hockey_mask_unarmed)<div class="sprite-phase">unarmed</div></div></div>
 <div class="sprite-meta"><span>debuts at Level 11</span><span>run by its #R$D398(handler)</span></div>
-<div class="sprite-what">Travels in a straight line, and turns only at walls and bricks. Drops a comet while you hold fire.</div>
+<div class="sprite-what">Travels in a straight line, and turns only at walls and bricks. Held fire makes it drop a comet.</div>
 </div>
 <div class="sprite-card" id="obj-capsule">
 <div class="sprite-name">capsule</div>
 <div class="sprite-stage">#FRAMES(capsule_1,8;capsule_2,8;capsule_3,8;capsule_4,8)(capsule)</div>
 <div class="sprite-meta"><span>debuts at Level 12</span><span>run by its #R$D00C(handler)</span></div>
-<div class="sprite-what">Wanders until it walks into a brick, which ends it. The brick takes a hit: a golden brick survives and a silver brick steps down. An orb that gives up becomes one.</div>
+<div class="sprite-what">Moves around until it hits a brick, which ends it. The brick takes a hit: a golden brick survives and a silver brick steps down. An orb that gives up becomes one.</div>
 </div>
 <div class="sprite-card" id="obj-orb">
 <div class="sprite-name">orb</div>
 <div class="sprite-stage"><div class="sprite-take">#UDGARRAY2,7,3,2,tindex=1,alpha=0($E641,,2;$E640,,2;$E651,,2;$E650,,2)(orb_hunt)<div class="sprite-phase">hunt</div></div><div class="sprite-take">#FRAMES(orb_chew_1,12;orb_chew_2,12;orb_chew_3,12;orb_chew_4,8;orb_chew_5,8;orb_chew_6,8;orb_chew_7,8;orb_chew_8,8;orb_chew_9,8;orb_chew_10,8;orb_chew_11,8;orb_chew_12,8;orb_chew_13,8)(orb_chew)<div class="sprite-phase">chew</div></div><div class="sprite-take">#FRAMES(orb_spit_1,12;orb_spit_2,12;orb_spit_3,8)(orb_spit)<div class="sprite-phase">spit</div></div><div class="sprite-take">#UDGARRAY2,7,3,2,tindex=1,alpha=0($E821,,2;$E820,,2;$E831,,2;$E830,,2)(orb_ball)<div class="sprite-phase">spat-out ball</div></div></div>
 <div class="sprite-meta"><span>debuts at Level 13</span><span>run by its #R$D05B(handler)</span></div>
-<div class="sprite-what">Hunts the ball, catches it, chews it, and spits it out over your losing edge: the ball is lost. If it cannot catch the ball in time, it turns into a capsule.</div>
+<div class="sprite-what">Hunts the ball, catches it, chews it, and spits it past the bat: the ball is lost. If it cannot catch the ball in time, it turns into a capsule.</div>
 </div>
 <div class="sprite-card" id="obj-visor">
 <div class="sprite-name">visor</div>
 <div class="sprite-stage">#FRAMES(visor_1,8;visor_2,8;visor_3,8;visor_4,8)(visor)</div>
 <div class="sprite-meta"><span>debuts at Level 15</span><span>run by its #R$D20F(handler)</span></div>
-<div class="sprite-what">Sits still for a while, then homes on the ball.</div>
+<div class="sprite-what">Stays still for a while, then chases the ball.</div>
 </div>
 <div class="sprite-card" id="obj-dart">
 <div class="sprite-name">dart</div>
@@ -333,7 +333,7 @@ The objects a level spawns during play, ordered by the level whose wave script f
 <div class="sprite-name">starburst</div>
 <div class="sprite-stage">#FRAMES(starburst_1,4;starburst_2,4;starburst_3,4)(starburst)</div>
 <div class="sprite-meta"><span>debuts at Level 21</span><span>run by its #R$D2C6(handler)</span></div>
-<div class="sprite-what">Wanders. A ball hit knocks it into a slide along the ball's heading, through bricks – golden included. The slide ends at a wall, past your losing edge, or when a ball hits it again.</div>
+<div class="sprite-what">Wanders. A ball hit knocks it into a slide along the ball's heading, through bricks – golden included. The slide ends at a wall, past the bat, or when a ball hits it again.</div>
 </div>
 <div class="sprite-card" id="obj-h-rotor">
 <div class="sprite-name">H-rotor</div>
@@ -345,19 +345,19 @@ The objects a level spawns during play, ordered by the level whose wave script f
 <div class="sprite-name">wheel</div>
 <div class="sprite-stage">#FRAMES(wheel_1,8;wheel_2,8;wheel_3,8;wheel_4,8)(wheel)</div>
 <div class="sprite-meta"><span>debuts at Level 25</span><span>run by its #R$D1B9(handler)</span></div>
-<div class="sprite-what">Bounces off walls and bricks, and zig-zags toward your bat's side. When one appears, more wheels appear below it until no room remains for another inhabitant.</div>
+<div class="sprite-what">Wheels appear directly below one another in a close vertical line. They sweep up and down, with short sideways moves toward the bat between passes. They can trail one another through the turns.</div>
 </div>
 <div class="sprite-card" id="obj-comet">
 <div class="sprite-name">comet</div>
 <div class="sprite-stage">#FRAMES(comet_1,4;comet_2,4;comet_3,4)(comet)</div>
 <div class="sprite-meta"><span>a level spawns it from Level 52</span><span>run by its #R$D44B(handler)</span></div>
-<div class="sprite-what">Falls straight down until a wall or a brick stops it. A hockey mask drops it while you hold fire, from Level 11. From Level 52 the level also spawns it on its own.</div>
+<div class="sprite-what">Falls straight down until a wall or a brick stops it. From Level 11, held fire makes a hockey mask drop it. From Level 52 the level also spawns it on its own.</div>
 </div>
 <div class="sprite-card" id="obj-ufo">
 <div class="sprite-name">UFO</div>
 <div class="sprite-stage">#FRAMES(ufo_1,8;ufo_2,8)(ufo)</div>
 <div class="sprite-meta"><span>run by its #R$CDE8(handler)</span></div>
-<div class="sprite-what">Never appears. The shipped game has no script that spawns it.</div>
+<div class="sprite-what">Never appears during play.</div>
 </div>
 </div>
 
